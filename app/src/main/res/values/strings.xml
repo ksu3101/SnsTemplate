@@ -33,4 +33,7 @@
    <string name="error_disabled_services_title">오류</string>
    <string name="error_disabled_servcies_message">현재 서버를 사용 할 수 없습니다.\n나중에 다시 시도해 주세요.</string>
 
+   <string name="error_lastest_appversion_title">업데이트</string>
+   <string name="error_lastest_appversion_message">최신 버전으로 앱을 업데이트 해야 합니다.</string>
+
 </resources>
