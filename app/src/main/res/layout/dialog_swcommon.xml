@@ -3,7 +3,7 @@
               android:layout_width="@dimen/dialog_def_width"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:background="@drawable/bg_dialog_common"
+              android:background="@drawable/bg_common_dialog"
               android:orientation="vertical"
               android:paddingTop="25dp">
 
@@ -27,7 +27,7 @@
       android:id="@+id/swdialog_tv_message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="25dp"
+      android:layout_marginBottom="40dp"
       android:layout_marginTop="14dp"
       android:gravity="center"
       android:textColor="@color/flat_stone"/>

@@ -1,7 +1,6 @@
 package kr.swkang.snstemplate;
 
-import java.util.concurrent.TimeUnit;
-
+import kr.swkang.snstemplate.login.model.LoginResultCode;
 import kr.swkang.snstemplate.utils.SwObservable;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;
@@ -34,11 +33,11 @@ public class SplashPresenter
               @Override
               public void call(Subscriber<? super Boolean> subscriber) {
                 try {
-                  Thread.sleep(1000);
+                  Thread.sleep(500);
                 } catch (InterruptedException ie) {
                   subscriber.onError(ie);
                 } finally {
-                  subscriber.onNext(true);
+                  subscriber.onNext(false);
                 }
               }
             }
@@ -60,14 +59,16 @@ public class SplashPresenter
           @Override
           public void onNext(Boolean result) {
             if (result) {
+              // 앱 버전 체크
               checkLastestAppVersion();
             }
             else {
               if (view != null) {
+                // 현재 서비스 이용 불가능 -> 종료
                 view.isDisabledService();
               }
-              onCompleted();
             }
+            onCompleted();
           }
         }
     );
@@ -79,7 +80,104 @@ public class SplashPresenter
    * 2.1 최신버전이 아닐 경우 -> 팝업 등장 -> 구글 플레이 스토어 강제 이동
    */
   public void checkLastestAppVersion() {
+    final SwObservable observable = new SwObservable(
+        this,
+        Observable.create(
+            new Observable.OnSubscribe<Boolean>() {
+              @Override
+              public void call(Subscriber<? super Boolean> subscriber) {
+                try {
+                  Thread.sleep(500);
+                } catch (InterruptedException ie) {
+                  subscriber.onError(ie);
+                } finally {
+                  subscriber.onNext(false);
+                }
+              }
+            }
+        ).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
+    );
+    observable.subscribe(
+        new Subscriber<Boolean>() {
+          @Override
+          public void onCompleted() {
+          }
 
+          @Override
+          public void onError(Throwable e) {
+            if (view != null) {
+              view.onError(getTag(SplashPresenter.class), e.getMessage());
+            }
+          }
+
+          @Override
+          public void onNext(Boolean result) {
+            if (result) {
+              // start auto login
+              startUserAutoLogin();
+            }
+            else {
+              if (view != null) {
+                view.isNotLastesAppVersion();
+              }
+            }
+            onCompleted();
+          }
+        }
+    );
+  }
+
+  /**
+   *
+   */
+  public void startUserAutoLogin() {
+    final SwObservable observable = new SwObservable(
+        this,
+        Observable.create(
+            new Observable.OnSubscribe<Integer>() {
+              @Override
+              public void call(Subscriber<? super Integer> subscriber) {
+
+                // 저장된 로그인 사용자의 기록이 있나 체크
+                // -> 있을 경우 -> 서버에 자동 로그인 시도
+                // -> 없을 경우 -> 로그인 화면으로 이동
+
+                final int resultCode = 0;
+
+                try {
+                  Thread.sleep(500);
+                } catch (InterruptedException ie) {
+                  subscriber.onError(ie);
+                } finally {
+                  subscriber.onNext(resultCode);
+                }
+              }
+            }
+        ).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
+    );
+    observable.subscribe(
+        new Subscriber<Integer>() {
+          @Override
+          public void onCompleted() {
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            if (view != null) {
+              view.onError(getTag(SplashPresenter.class), e.getMessage());
+            }
+          }
+
+          @Override
+          public void onNext(Integer resultCodeInt) {
+            final LoginResultCode resultCode = LoginResultCode.parseFromValue(resultCodeInt);
+            if (view != null) {
+              view.completeValidationUser(resultCode);
+            }
+            onCompleted();
+          }
+        }
+    );
   }
 
   public interface View
@@ -88,7 +186,7 @@ public class SplashPresenter
 
     void isNotLastesAppVersion();
 
-    void completeValidationUser();
+    void completeValidationUser(LoginResultCode resultCode);
   }
 
 }

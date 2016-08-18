@@ -138,6 +138,7 @@ public class SwDialog
     }
     if (negativeBtnTitle != null) {
       tvNegativeBtn.setText(negativeBtnTitle);
+      tvNegativeBtn.setBackgroundResource(R.drawable.btn_dlg_right);
       tvNegativeBtn.setVisibility(View.VISIBLE);
     }
     else {

@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import kr.swkang.nestedrecyclerview.R;
+import kr.swkang.snstemplate.R;
 
 /**
  * @author KangSung-Woo
