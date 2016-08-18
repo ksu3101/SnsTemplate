@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   <!-- default Selectors enter animation duration -->
+   <integer name="common_enter_anim_duration">50</integer>
+   <!-- default Selecgtors exit animation duration -->
+   <integer name="common_exit_anim_duration">100</integer>
+
+   <!-- default activity transition duration (ms) -->
+   <integer name="activity_transition_duration">250</integer>
+   <!-- default activity alpha animation duration (ms) -->
+   <integer name="activity_alpha_duration">100</integer>
+
+</resources>

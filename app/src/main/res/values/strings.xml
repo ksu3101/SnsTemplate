@@ -1,3 +1,36 @@
 <resources>
    <string name="app_name">SnsTemplate</string>
+
+   <string name="c_login">로그인</string>
+   <string name="c_logout">로그아웃</string>
+   <string name="c_join">회원가입</string>
+   <string name="c_comfirm">승인</string>
+   <string name="c_ok">확인</string>
+   <string name="c_complete">완료</string>
+   <string name="c_cancel">취소</string>
+   <string name="c_pw">비밀번호</string>
+   <string name="c_next">다음</string>
+   <string name="c_previous">이전</string>
+   <string name="c_need_search_word">검색어를 입력하세요.</string>
+   <string name="c_restore">복구</string>
+   <string name="c_resetdatas">초기화</string>
+   <string name="c_edit">수정</string>
+   <string name="c_delete">삭제</string>
+   <string name="c_input">입력</string>
+   <string name="c_update">업데이트</string>
+   <string name="c_following">팔로잉</string>
+   <string name="c_follow">팔로우</string>
+   <string name="c_close">닫기</string>
+   <string name="c_load">불러오기</string>
+   <string name="c_male">남자</string>
+   <string name="c_female">여자</string>
+   <string name="c_like">좋아요</string>
+   <string name="c_add">추가</string>
+   <string name="c_send">보내기</string>
+   <string name="c_continue">계속하기</string>
+   <string name="c_exit">나가기</string>
+
+   <string name="error_disabled_services_title">오류</string>
+   <string name="error_disabled_servcies_message">현재 서버를 사용 할 수 없습니다.\n나중에 다시 시도해 주세요.</string>
+
 </resources>
