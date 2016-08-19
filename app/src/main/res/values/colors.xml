@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <color name="colorPrimary">#3F51B5</color>
-   <color name="colorPrimaryDark">#303F9F</color>
-   <color name="colorAccent">#FF4081</color>
+   <color name="colorPrimary">@color/flat_asbestos</color>
+   <color name="colorPrimaryDark">@color/flat_asphalt</color>
+   <color name="colorAccent">@color/flat_sun</color>
 
    <!-- ALPHA HEX : 00 ~ FF
 100% — FF / 95% — F2 / 90% — E6 / 85% — D9 / 80% — CC / 75% — BF / 70% — B3

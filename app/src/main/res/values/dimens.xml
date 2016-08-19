@@ -7,4 +7,7 @@
    <dimen name="dialog_def_width">260dp</dimen>
    <dimen name="dialog_corner">3dp</dimen>
 
+   <!-- common buttons -->
+   <dimen name="btn_def_corner">3dp</dimen>
+
 </resources>

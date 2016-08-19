@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import kr.swkang.snstemplate.R;
-import kr.swkang.snstemplate.login.LoginActivityPresenter;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 
@@ -14,13 +13,13 @@ import kr.swkang.snstemplate.utils.mvp.BasePresenter;
  */
 public class MainActivity
     extends BaseActivity
-    implements LoginActivityPresenter.View {
+    implements MainActivityPresenter.View {
 
-  private LoginActivityPresenter presenter;
+  private MainActivityPresenter presenter;
 
   @Override
   public BasePresenter attachPresenter() {
-    this.presenter = new LoginActivityPresenter(this);
+    this.presenter = new MainActivityPresenter(this);
     return presenter;
   }
 
