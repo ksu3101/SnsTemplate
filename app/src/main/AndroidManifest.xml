@@ -28,6 +28,10 @@
          android:screenOrientation="portrait"
          android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
+      <activity
+         android:name=".main.MainActivity"
+         android:screenOrientation="portrait"/>
+
    </application>
 
 </manifest>
