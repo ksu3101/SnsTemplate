@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:enterFadeDuration="@integer/common_enter_anim_duration"
+          android:exitFadeDuration="@integer/common_exit_anim_duration">
+
+   <!-- Checked Status -->
+   <item android:color="@color/black" android:state_checked="true">
+   </item>
+
+   <!-- Selected Status -->
+   <item android:color="@color/black" android:state_selected="true">
+   </item>
+
+   <!-- Pressed Status -->
+   <item android:color="@color/black" android:state_pressed="true">
+   </item>
+
+   <!-- Focused Status -->
+   <item android:color="@color/black" android:state_focused="true">
+   </item>
+
+   <!-- Activated Status -->
+   <item android:color="@color/black" android:state_activated="true">
+   </item>
+
+   <!-- Disabled Status -->
+   <item android:color="@color/transparent_heavy_white" android:state_enabled="false">
+   </item>
+
+   <!-- Default Status -->
+   <item android:color="@color/black">
+   </item>
+
+
+</selector>

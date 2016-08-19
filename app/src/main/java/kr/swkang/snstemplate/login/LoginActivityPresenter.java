@@ -1,7 +1,9 @@
 package kr.swkang.snstemplate.login;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import kr.swkang.snstemplate.login.model.LoginResultCode;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;
 
@@ -17,8 +19,12 @@ public class LoginActivityPresenter
     this.view = activity;
   }
 
+  public void startLoginJobs(@NonNull String email, @NonNull String pw) {
+    Log.d(getTag(LoginActivityPresenter.class), "/// email = " + email + ", password = " + pw);
+  }
+
   public interface View
       extends BaseView {
-
+    void resultOfLogin(@NonNull LoginResultCode resultCode);
   }
 }

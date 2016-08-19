@@ -249,12 +249,6 @@ public class SwDialog
       return new SwDialog(context, this);
     }
 
-    public SwDialog build(boolean isShow) {
-      final SwDialog dlg = new SwDialog(context, this);
-      dlg.show();
-      return dlg;
-    }
-
   }
 
 }

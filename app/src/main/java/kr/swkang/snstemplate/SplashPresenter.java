@@ -1,5 +1,7 @@
 package kr.swkang.snstemplate;
 
+import android.support.annotation.NonNull;
+
 import kr.swkang.snstemplate.login.model.LoginResultCode;
 import kr.swkang.snstemplate.utils.SwObservable;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
@@ -143,7 +145,7 @@ public class SplashPresenter
                 // -> 있을 경우 -> 서버에 자동 로그인 시도
                 // -> 없을 경우 -> 로그인 화면으로 이동
 
-                final int resultCode = LoginResultCode.SUCCESS.getValue();
+                final int resultCode = LoginResultCode.FAILED_WRONG_INFOS.getValue();
 
                 try {
                   Thread.sleep(500);
@@ -173,7 +175,7 @@ public class SplashPresenter
           public void onNext(Integer resultCodeInt) {
             final LoginResultCode resultCode = LoginResultCode.parseFromValue(resultCodeInt);
             if (view != null) {
-              view.completeAutoLoginUser(resultCode);
+              view.resultOfAutoLoginUser(resultCode);
             }
             onCompleted();
           }
@@ -187,7 +189,7 @@ public class SplashPresenter
 
     void isNotLastesAppVersion();
 
-    void completeAutoLoginUser(LoginResultCode resultCode);
+    void resultOfAutoLoginUser(@NonNull LoginResultCode resultCode);
   }
 
 }
