@@ -1,17 +1,18 @@
-package kr.swkang.snstemplate.login;
+package kr.swkang.snstemplate.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import kr.swkang.snstemplate.R;
+import kr.swkang.snstemplate.login.LoginActivityPresenter;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 
 /**
  * @author KangSung-Woo
- * @since 2016/08/18
+ * @since 2016/08/19
  */
-public class LoginActivity
+public class MainActivity
     extends BaseActivity
     implements LoginActivityPresenter.View {
 
@@ -26,7 +27,7 @@ public class LoginActivity
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.login_activity);
+    setContentView(R.layout.main_activity);
   }
 
 }

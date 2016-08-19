@@ -190,13 +190,13 @@ public class SwDialog
       this.clickListener = null;
     }
 
-    public Builder icon(@NonNull Drawable iconDrawable, @NonNull RoundedDrawableParams params) {
+    public Builder icon(@NonNull Drawable iconDrawable, @Nullable RoundedDrawableParams params) {
       this.iconDrawable = iconDrawable;
       this.iconDrawableParams = params;
       return this;
     }
 
-    public Builder icon(@DrawableRes int iconDrawableResId, @NonNull RoundedDrawableParams params) {
+    public Builder icon(@DrawableRes int iconDrawableResId, @Nullable RoundedDrawableParams params) {
       this.iconDrawable = ContextCompat.getDrawable(context, iconDrawableResId);
       this.iconDrawableParams = params;
       return this;
@@ -247,6 +247,12 @@ public class SwDialog
 
     public SwDialog build() {
       return new SwDialog(context, this);
+    }
+
+    public SwDialog build(boolean isShow) {
+      final SwDialog dlg = new SwDialog(context, this);
+      dlg.show();
+      return dlg;
     }
 
   }

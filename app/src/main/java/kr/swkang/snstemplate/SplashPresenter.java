@@ -37,7 +37,7 @@ public class SplashPresenter
                 } catch (InterruptedException ie) {
                   subscriber.onError(ie);
                 } finally {
-                  subscriber.onNext(false);
+                  subscriber.onNext(true);
                 }
               }
             }
@@ -86,12 +86,13 @@ public class SplashPresenter
             new Observable.OnSubscribe<Boolean>() {
               @Override
               public void call(Subscriber<? super Boolean> subscriber) {
+
                 try {
                   Thread.sleep(500);
                 } catch (InterruptedException ie) {
                   subscriber.onError(ie);
                 } finally {
-                  subscriber.onNext(false);
+                  subscriber.onNext(true);
                 }
               }
             }
@@ -142,7 +143,7 @@ public class SplashPresenter
                 // -> 있을 경우 -> 서버에 자동 로그인 시도
                 // -> 없을 경우 -> 로그인 화면으로 이동
 
-                final int resultCode = 0;
+                final int resultCode = LoginResultCode.SUCCESS.getValue();
 
                 try {
                   Thread.sleep(500);
@@ -172,7 +173,7 @@ public class SplashPresenter
           public void onNext(Integer resultCodeInt) {
             final LoginResultCode resultCode = LoginResultCode.parseFromValue(resultCodeInt);
             if (view != null) {
-              view.completeValidationUser(resultCode);
+              view.completeAutoLoginUser(resultCode);
             }
             onCompleted();
           }
@@ -186,7 +187,7 @@ public class SplashPresenter
 
     void isNotLastesAppVersion();
 
-    void completeValidationUser(LoginResultCode resultCode);
+    void completeAutoLoginUser(LoginResultCode resultCode);
   }
 
 }

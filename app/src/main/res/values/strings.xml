@@ -34,6 +34,16 @@
    <string name="error_disabled_servcies_message">현재 서버를 사용 할 수 없습니다.\n나중에 다시 시도해 주세요.</string>
 
    <string name="error_lastest_appversion_title">업데이트</string>
-   <string name="error_lastest_appversion_message">최신 버전으로 앱을 업데이트 해야 합니다.</string>
+   <string name="error_lastest_appversion_message">최신 버전으로 앱을\n업데이트 해야 합니다.</string>
+
+   <string name="error_wrong_login_infos_title">오류</string>
+   <string name="error_wrong_login_infos_message">잘못된 로그인 정보입니다.\n다시 로그인해 주세요.</string>
+
+   <string name="error_not_joined_user_title">오류</string>
+   <string name="error_not_joined_user_message">존재하지 않는 유저입니다.\n가입 화면으로 이동할까요?</string>
+
+   <string name="error_network_common_title">오류</string>
+   <string name="error_network_common_message">통신중 오류가 발생했습니다.\n다시 시도해 주세요.</string>
+   <string name="error_network_disabled">네트워크에 연결되지 않았습니다.\n연결 후 다시 시도해 주세요.</string>
 
 </resources>
