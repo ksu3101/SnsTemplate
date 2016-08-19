@@ -56,6 +56,14 @@ public abstract class BaseActivity
 
   // - - Common methods - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  public final void startActivity_Login() {
+
+  }
+
+  public final void startActivity_JoinUser() {
+
+  }
+
   // - - functional methods - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   protected boolean isShowingDialog() {
