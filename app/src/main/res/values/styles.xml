@@ -6,6 +6,7 @@
       <item name="colorPrimary">@color/flat_asbestos</item>
       <item name="colorPrimaryDark">@color/flat_asphalt</item>
       <item name="colorAccent">@color/flat_red</item>
+      <item name="android:windowIsTranslucent">true</item>
    </style>
 
    <!-- clear Parent button -->

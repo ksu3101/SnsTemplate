@@ -108,11 +108,6 @@ public class LoginActivity
     }
   }
 
-  @Override
-  public void resultOfLogin(@NonNull LoginResultCode resultCode) {
-    processResultOfLogin(resultCode);
-  }
-
   private void setFocusEditText(@NonNull final EditText et, boolean clearText) {
     if (clearText) et.setText("");
     new Handler().postDelayed(
@@ -162,6 +157,11 @@ public class LoginActivity
         dialog.show();
       }
     }
+  }
+
+  @Override
+  public void resultOfLogin(@NonNull LoginResultCode resultCode) {
+    processResultOfLogin(resultCode);
   }
 
 }
