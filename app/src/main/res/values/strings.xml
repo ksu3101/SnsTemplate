@@ -32,6 +32,7 @@
    <string name="c_exit">나가기</string>
    <string name="c_email">이메일</string>
    <string name="c_password">비밀번호</string>
+   <string name="c_skip">SKIP</string>
 
    <string name="error_disabled_services_title">오류</string>
    <string name="error_disabled_servcies_message">현재 서버를 사용 할 수 없습니다.\n나중에 다시 시도해 주세요.</string>

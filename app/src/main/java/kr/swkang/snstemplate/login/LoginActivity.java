@@ -98,7 +98,6 @@ public class LoginActivity
 
   @OnClick({R.id.login_btn_login})
   public void onClick(View view) {
-    Log.d("LoginActivity", "// R.id.login_btn_login");
     if (view.getId() == R.id.login_btn_login) {
       // hide keyboards
       Utils.hideSoftKeyboard(this);
