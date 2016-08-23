@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.swkang.snstemplate.utils;
+package kr.swkang.snstemplate.utils.widgets;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -21,6 +21,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+
+import kr.swkang.snstemplate.utils.TextWatcherAdapter;
 
 /**
  * To change clear icon, set

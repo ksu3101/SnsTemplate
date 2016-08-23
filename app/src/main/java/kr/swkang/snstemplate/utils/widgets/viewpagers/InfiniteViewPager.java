@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils.viewpagers;
+package kr.swkang.snstemplate.utils.widgets.viewpagers;
 
 
 import android.content.Context;

@@ -2,9 +2,11 @@ package kr.swkang.snstemplate.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -65,6 +67,50 @@ public class Utils {
     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     view.requestFocus();
     imm.showSoftInput(view, 0);
+  }
+
+  /**
+   * Pixel 단위 숫자를 DPI단위 Float형태의 숫자로 변환한다.
+   *
+   * @param res   Resources.
+   * @param pixel 변환대상 Pixel 단위 숫자.
+   * @return Float형태의 DPI.
+   */
+  public static float convertPixelToDpi(@NonNull Resources res, int pixel) {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixel, res.getDisplayMetrics());
+  }
+
+  /**
+   * DPI 단위 숫자를 Pixel 단위 Float형태의 숫자로 변환한다.
+   *
+   * @param res Resources.
+   * @param dpi 변환대상 DPI단위의 숫자.
+   * @return Float형태의 pixel 숫자.
+   */
+  public static float convertDpiToPixel(@NonNull Resources res, int dpi) {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, res.getDisplayMetrics());
+  }
+
+  /**
+   * Pixel 단위 숫자를 DPI단위 Float형태의 숫자로 변환한다.
+   *
+   * @param res   Resources.
+   * @param pixel 변환대상 Pixel 단위 숫자.
+   * @return Float형태의 DPI.
+   */
+  public static float convertPixelToDpi(@NonNull Resources res, float pixel) {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixel, res.getDisplayMetrics());
+  }
+
+  /**
+   * DPI 단위 숫자를 Pixel 단위 Float형태의 숫자로 변환한다.
+   *
+   * @param res Resources.
+   * @param dpi 변환대상 DPI단위의 숫자.
+   * @return Float형태의 pixel 숫자.
+   */
+  public static float convertDpiToPixel(@NonNull Resources res, float dpi) {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, res.getDisplayMetrics());
   }
 
 }

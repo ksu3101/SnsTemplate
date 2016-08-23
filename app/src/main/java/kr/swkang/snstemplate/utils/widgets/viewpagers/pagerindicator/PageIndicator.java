@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package kr.swkang.snstemplate.utils.viewpagers.pagerindicator;
+package kr.swkang.snstemplate.utils.widgets.viewpagers.pagerindicator;
 
 import android.support.v4.view.ViewPager;
 

@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils.recyclerview;
+package kr.swkang.snstemplate.utils.widgets.recyclerview;
 
 import android.content.Context;
 import android.support.annotation.IdRes;

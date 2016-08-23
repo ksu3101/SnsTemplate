@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils.viewpagers;
+package kr.swkang.snstemplate.utils.widgets.viewpagers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
