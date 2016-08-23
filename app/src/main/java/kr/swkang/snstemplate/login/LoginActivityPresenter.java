@@ -7,6 +7,7 @@ import kr.swkang.snstemplate.login.model.LoginResultCode;
 import kr.swkang.snstemplate.utils.SwObservable;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;
+import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,7 +37,7 @@ public class LoginActivityPresenter
                 int resultCode = LoginResultCode.SUCCESS.getValue();
 
                 try {
-                  Thread.sleep(100);
+                  Thread.sleep(1500); // DUMMY VALUE
                 } catch (InterruptedException ie) {
                   subscriber.onError(ie);
                 } finally {
@@ -62,9 +63,14 @@ public class LoginActivityPresenter
           @Override
           public void onNext(Integer result) {
             if (view != null) {
+              // reslut code
               final LoginResultCode resultCode = LoginResultCode.parseFromValue(result);
+
+              // user info (DUMMY)
+              final UserInfo userInfo = new UserInfo();
+
               // 로그인 결과 콜백
-              view.resultOfLogin(resultCode);
+              view.resultOfLogin(userInfo, resultCode);
             }
             onCompleted();
           }
@@ -74,6 +80,6 @@ public class LoginActivityPresenter
 
   public interface View
       extends BaseView {
-    void resultOfLogin(@NonNull LoginResultCode resultCode);
+    void resultOfLogin(@NonNull UserInfo logginedUserInfo, @NonNull LoginResultCode resultCode);
   }
 }

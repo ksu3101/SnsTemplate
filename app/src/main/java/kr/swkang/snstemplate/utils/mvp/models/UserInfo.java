@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils.common.models;
+package kr.swkang.snstemplate.utils.mvp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
