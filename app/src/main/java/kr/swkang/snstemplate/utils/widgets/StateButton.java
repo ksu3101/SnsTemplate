@@ -221,10 +221,7 @@ public class StateButton
 
   private void updateLayoutsProgressBar(@NonNull ProgressBar pb) {
     if (isPbVisible) {
-      if (state == STATE_ENABLED) {
-        pb.setVisibility(View.GONE);
-      }
-      else {
+      if (state == STATE_WAITING) {
         pb.setVisibility(View.VISIBLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
           if (pbColorList != null) {
@@ -234,6 +231,9 @@ public class StateButton
             pb.setIndeterminateDrawable(pbDrawable);
           }
         }
+      }
+      else {
+        pb.setVisibility(View.GONE);
       }
     }
     else {
