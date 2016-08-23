@@ -9,7 +9,6 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import butterknife.BindView;
@@ -17,11 +16,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.swkang.snstemplate.R;
 import kr.swkang.snstemplate.login.model.LoginResultCode;
-import kr.swkang.snstemplate.utils.ClearableEditText;
 import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.common.dialogs.SwDialog;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
+import kr.swkang.snstemplate.utils.widgets.ClearableEditText;
+import kr.swkang.snstemplate.utils.widgets.StateButton;
 import kr.swkang.spannabletextview.SpannableTextView;
 import kr.swkang.spannabletextview.utils.SwClickableSpan;
 
@@ -42,7 +42,7 @@ public class LoginActivity
   @BindView(R.id.login_et_password)
   ClearableEditText etPassword;
   @BindView(R.id.login_btn_login)
-  Button            btnLogin;
+  StateButton       btnLogin;
 
   @Override
   public BasePresenter attachPresenter() {
@@ -98,11 +98,14 @@ public class LoginActivity
   @OnClick({R.id.login_btn_login})
   public void onClick(View view) {
     if (view.getId() == R.id.login_btn_login) {
+      Log.d("LoginActivity", "// R.id.login_btn_login");
       // hide keyboards
       Utils.hideSoftKeyboard(this);
 
-      final String email = etEmail.getText().toString();
-      final String pw = etPassword.getText().toString();
+      final String email = etEmail.getText()
+                                  .toString();
+      final String pw = etPassword.getText()
+                                  .toString();
 
       checkInputsAndProcess(email, pw);
     }
@@ -122,6 +125,9 @@ public class LoginActivity
 
   private void checkInputsAndProcess(final String email, final String pw) {
     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pw)) {
+      etEmail.setEnabled(false);
+      etPassword.setEnabled(false);
+      btnLogin.setButtonState(StateButton.STATE_WAITING);
       presenter.startLoginJobs(email, pw);
     }
     else {

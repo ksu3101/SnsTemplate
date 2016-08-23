@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   <declare-styleable name="StateButton">
+      <attr name="sb_state" format="enum">
+         <enum name="enable" value="1"/>
+         <enum name="waiting" value="2"/>
+         <enum name="disabled" value="3"/>
+      </attr>
+      <attr name="sb_btn_text_enable" format="string"/>
+      <attr name="sb_btn_text_wait" format="string"/>
+      <attr name="sb_btn_text_disabled" format="string"/>
+      <attr name="sb_btn_selector" format="reference"/>
+      <attr name="sb_btn_textcolor" format="color|reference"/>
+      <attr name="sb_btn_textsize" format="dimension"/>
+      <attr name="sb_btn_paddingLeft" format="dimension"/>
+      <attr name="sb_btn_paddingRight" format="dimension"/>
+      <attr name="sb_btn_paddingTop" format="dimension"/>
+      <attr name="sb_btn_paddingBottom" format="dimension"/>
+      <attr name="sb_progressbar_color" format="color|reference"/>
+      <attr name="sb_progressbar_drawable" format="reference"/>
+      <attr name="sb_progressbar_visible" format="boolean"/>
+   </declare-styleable>
+
+</resources>

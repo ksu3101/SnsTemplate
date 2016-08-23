@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils.viewpagers.pagerindicator;
+package kr.swkang.snstemplate.utils.widgets.viewpagers.pagerindicator;
 
 import android.content.Context;
 import android.os.Bundle;

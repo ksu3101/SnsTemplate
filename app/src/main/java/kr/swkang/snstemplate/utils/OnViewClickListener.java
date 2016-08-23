@@ -2,7 +2,7 @@ package kr.swkang.snstemplate.utils;
 
 import android.support.annotation.NonNull;
 
-import kr.swkang.snstemplate.utils.recyclerview.SwRecyclerViewAdapter;
+import kr.swkang.snstemplate.utils.widgets.recyclerview.SwRecyclerViewAdapter;
 
 /**
  * @author KangSung-Woo
