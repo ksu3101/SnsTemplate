@@ -77,6 +77,7 @@ public class StateButton
     this.isPbVisible = false;
     this.state = STATE_ENABLED;
     setEnabled(true);
+    setClickable(true);
   }
 
   private void init(@NonNull Context context, AttributeSet attrs) {
@@ -96,7 +97,8 @@ public class StateButton
       btnTextColor = a.getColorStateList(R.styleable.StateButton_sb_btn_textcolor);
       btnTextSize = a.getDimensionPixelSize(
           R.styleable.StateButton_sb_btn_textsize,
-          (int) Utils.convertDpiToPixel(context.getResources(), 14));
+          (int) Utils.convertDpiToPixel(context.getResources(), 14)
+      );
 
       pbColorList = a.getColorStateList(R.styleable.StateButton_sb_progressbar_color);
       pbDrawable = a.getDrawable(R.styleable.StateButton_sb_progressbar_drawable);
@@ -194,6 +196,9 @@ public class StateButton
 
     if (btnPaddings != null) {
       btn.setPadding(btnPaddings.left, btnPaddings.top, btnPaddings.right, btnPaddings.bottom);
+    }
+    if (btnTextColor != null) {
+      btn.setTextColor(btnTextColor);
     }
     if (btnBg != null) {
       btn.setBackgroundDrawable(btnBg);

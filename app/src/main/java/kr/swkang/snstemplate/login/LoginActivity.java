@@ -97,8 +97,8 @@ public class LoginActivity
 
   @OnClick({R.id.login_btn_login})
   public void onClick(View view) {
+    Log.d("LoginActivity", "// R.id.login_btn_login");
     if (view.getId() == R.id.login_btn_login) {
-      Log.d("LoginActivity", "// R.id.login_btn_login");
       // hide keyboards
       Utils.hideSoftKeyboard(this);
 
@@ -107,7 +107,18 @@ public class LoginActivity
       final String pw = etPassword.getText()
                                   .toString();
 
-      checkInputsAndProcess(email, pw);
+      btnLogin.setButtonState(StateButton.STATE_WAITING);
+
+      new Handler().postDelayed(
+          new Runnable() {
+            @Override
+            public void run() {
+              btnLogin.setButtonState(StateButton.STATE_ENABLED);
+            }
+          }
+          , 3000);
+
+      //checkInputsAndProcess(email, pw);
     }
   }
 
