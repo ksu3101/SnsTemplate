@@ -20,6 +20,7 @@ import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.common.dialogs.SwDialog;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
+import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
 import kr.swkang.snstemplate.utils.widgets.ClearableEditText;
 import kr.swkang.snstemplate.utils.widgets.StateButton;
 import kr.swkang.spannabletextview.SpannableTextView;
@@ -97,7 +98,6 @@ public class LoginActivity
 
   @OnClick({R.id.login_btn_login})
   public void onClick(View view) {
-    Log.d("LoginActivity", "// R.id.login_btn_login");
     if (view.getId() == R.id.login_btn_login) {
       // hide keyboards
       Utils.hideSoftKeyboard(this);
@@ -107,18 +107,7 @@ public class LoginActivity
       final String pw = etPassword.getText()
                                   .toString();
 
-      btnLogin.setButtonState(StateButton.STATE_WAITING);
-
-      new Handler().postDelayed(
-          new Runnable() {
-            @Override
-            public void run() {
-              btnLogin.setButtonState(StateButton.STATE_ENABLED);
-            }
-          }
-          , 3000);
-
-      //checkInputsAndProcess(email, pw);
+      checkInputsAndProcess(email, pw);
     }
   }
 
@@ -139,7 +128,10 @@ public class LoginActivity
       etEmail.setEnabled(false);
       etPassword.setEnabled(false);
       btnLogin.setButtonState(StateButton.STATE_WAITING);
+
+      // start Login jobs
       presenter.startLoginJobs(email, pw);
+
     }
     else {
       String dlgTitle = getString(R.string.error_input_email_title);
@@ -177,8 +169,20 @@ public class LoginActivity
   }
 
   @Override
-  public void resultOfLogin(@NonNull LoginResultCode resultCode) {
-    processResultOfLogin(resultCode);
+  public void resultOfLogin(@NonNull UserInfo logginedUserInfo, @NonNull LoginResultCode resultCode) {
+    this.processResultOfLogin(resultCode);
+
+  }
+
+  @Override
+  public void processResultOfLogin(@NonNull LoginResultCode resultCode) {
+    super.processResultOfLogin(resultCode);
+
+    if (resultCode != LoginResultCode.SUCCESS) {
+      etEmail.setEnabled(true);
+      etPassword.setEnabled(true);
+      btnLogin.setButtonState(StateButton.STATE_ENABLED);
+    }
   }
 
 }

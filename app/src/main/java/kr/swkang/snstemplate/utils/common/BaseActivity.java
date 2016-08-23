@@ -104,7 +104,8 @@ public abstract class BaseActivity
   @CallSuper
   @Override
   protected void onDestroy() {
-    Picasso.with(this).cancelTag(this);
+    Picasso.with(this)
+           .cancelTag(this);
     if (dialog != null) {
       dialog.dismiss();
     }
@@ -191,6 +192,7 @@ public abstract class BaseActivity
    *
    * @param resultCode 로그인 결과값
    */
+  @CallSuper
   public void processResultOfLogin(@NonNull LoginResultCode resultCode) {
     if (resultCode == LoginResultCode.SUCCESS) {
       // start MainActivity
@@ -237,7 +239,6 @@ public abstract class BaseActivity
                       @Override
                       public void onClicked(SwDialog dialog, View v) {
                         dialog.dismiss();
-                        finish();
                       }
                     } : clickListener)
             .build();
