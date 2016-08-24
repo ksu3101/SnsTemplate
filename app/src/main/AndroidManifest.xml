@@ -29,6 +29,15 @@
          android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
       <activity
+         android:name=".showcase.ShowCaseActivity"
+         android:screenOrientation="portrait"/>
+
+      <activity
+         android:name=".join.JoinUserActivity"
+         android:screenOrientation="portrait"
+         android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+
+      <activity
          android:name=".main.MainActivity"
          android:screenOrientation="portrait"/>
 

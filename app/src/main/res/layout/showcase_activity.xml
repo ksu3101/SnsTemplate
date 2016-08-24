@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/black"
                 android:orientation="vertical">
 
    <android.support.v4.view.ViewPager
@@ -36,8 +37,7 @@
       android:paddingRight="20dp"
       android:paddingTop="12dp"
       android:rotation="180"
-      android:src="@drawable/ic_right_arrow"
-      android:visibility="gone"/>
+      android:src="@drawable/ic_right_arrow"/>
 
    <!-- Skip button -->
    <TextView

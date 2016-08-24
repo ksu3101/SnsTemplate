@@ -14,9 +14,11 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import kr.swkang.snstemplate.R;
+import kr.swkang.snstemplate.join.JoinUserActivity;
 import kr.swkang.snstemplate.login.LoginActivity;
 import kr.swkang.snstemplate.login.model.LoginResultCode;
 import kr.swkang.snstemplate.main.MainActivity;
+import kr.swkang.snstemplate.showcase.ShowCaseActivity;
 import kr.swkang.snstemplate.utils.common.dialogs.SwDialog;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;
@@ -196,7 +198,11 @@ public abstract class BaseActivity
   public void processResultOfLogin(@NonNull LoginResultCode resultCode) {
     if (resultCode == LoginResultCode.SUCCESS) {
       // start MainActivity
-      startActivity_Main();
+
+      // startActivity_Main();
+      // FIXME
+      startActivity_ShowCase();
+
       finish();
     }
     else {
@@ -281,8 +287,14 @@ public abstract class BaseActivity
     startActivity(intent);
   }
 
-  public final void startActivity_JoinUser() {
+  public final void startActivity_ShowCase() {
+    Intent intent = new Intent(this, ShowCaseActivity.class);
+    startActivity(intent);
+  }
 
+  public final void startActivity_JoinUser() {
+    Intent intent = new Intent(this, JoinUserActivity.class);
+    startActivity(intent);
   }
 
   public final void startActivity_ResetPassword() {
