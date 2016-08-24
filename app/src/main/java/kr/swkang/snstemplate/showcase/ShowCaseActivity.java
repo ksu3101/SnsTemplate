@@ -54,9 +54,13 @@ public class ShowCaseActivity
     setContentView(R.layout.showcase_activity);
     ButterKnife.bind(this);
 
-
     adapter = new ShowCaseVpAdapter(getSupportFragmentManager());
     viewPager.setAdapter(adapter);
+
+    indicator.setNormalItemDrawable(R.drawable.shape_vp_indicator_normal);
+    indicator.setSelectedItemDrawable(R.drawable.shape_vp_indicator_selected);
+    indicator.setCircleMarginDP(8);
+    indicator.setViewPager(viewPager);
 
     viewPager.setPageMargin((int) Utils.convertDpiToPixel(getResources(), 5));
     viewPager.setPageTransformer(false, new CaseTransformer());
@@ -95,7 +99,12 @@ public class ShowCaseActivity
     int selectedPos = viewPager.getCurrentItem();
 
     if (v.getId() == R.id.showcase_tv_skip) {
-      // start
+      // FIXME : save Preference
+      // SwPreferences.saveHasVisitShowcaseScreen(this);
+
+      // start main Activity
+      startActivity_Main();
+
     }
     else if (v.getId() == R.id.showcase_ibtn_left) {
       if (selectedPos > 0) {
