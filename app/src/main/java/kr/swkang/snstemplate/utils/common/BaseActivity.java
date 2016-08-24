@@ -1,6 +1,5 @@
 package kr.swkang.snstemplate.utils.common;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -12,7 +11,6 @@ import android.view.View;
 
 import com.squareup.picasso.Picasso;
 
-import butterknife.ButterKnife;
 import kr.swkang.snstemplate.R;
 import kr.swkang.snstemplate.join.JoinUserActivity;
 import kr.swkang.snstemplate.login.LoginActivity;
@@ -30,9 +28,9 @@ import kr.swkang.snstemplate.utils.mvp.BaseView;
 public abstract class BaseActivity
     extends AppCompatActivity
     implements BaseView {
-  private   BasePresenter   basePresenter;
-  private   TransitionStyle transitionStyle;
-  protected SwDialog        dialog;
+  protected SwDialog      dialog;
+  private   BasePresenter basePresenter;
+  private TransitionStyle transitionStyle = TransitionStyle.NORMAL;
 
   // - - Abstract methods  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -106,8 +104,7 @@ public abstract class BaseActivity
   @CallSuper
   @Override
   protected void onDestroy() {
-    Picasso.with(this)
-           .cancelTag(this);
+    Picasso.with(this).cancelTag(this);
     if (dialog != null) {
       dialog.dismiss();
     }
@@ -197,12 +194,12 @@ public abstract class BaseActivity
   @CallSuper
   public void processResultOfLogin(@NonNull LoginResultCode resultCode) {
     if (resultCode == LoginResultCode.SUCCESS) {
-      // start MainActivity
-
-      // startActivity_Main();
-      // FIXME
-      startActivity_ShowCase();
-
+      if (SwPreferences.hasVisitShowcaseScreen(this)) {
+        startActivity_Main();
+      }
+      else {
+        startActivity_ShowCase();
+      }
       finish();
     }
     else {

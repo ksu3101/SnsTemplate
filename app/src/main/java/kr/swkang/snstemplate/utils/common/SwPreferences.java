@@ -2,6 +2,7 @@ package kr.swkang.snstemplate.utils.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 /**
@@ -10,7 +11,24 @@ import android.util.Log;
  */
 public class SwPreferences {
 
+  private static final String K_VISIT_SHOWCASE_SCREEN = "has_visit_showcase_screen";
 
+  /**
+   *
+   * @param context
+   * @return
+   */
+  public static boolean hasVisitShowcaseScreen(@NonNull Context context) {
+    return preferencesLoad_Boolean(context, K_VISIT_SHOWCASE_SCREEN);
+  }
+
+  public static boolean saveHasVisitShowcaseScreen(@NonNull Context context) {
+    return preferenceSave(context, K_VISIT_SHOWCASE_SCREEN, true);
+  }
+
+  public static void resetHasVisitShowcaseScreen(@NonNull Context context) {
+    preferencesRemove(context, K_VISIT_SHOWCASE_SCREEN);
+  }
 
   /**
    * (G) 앱 설정값을 저장한다.

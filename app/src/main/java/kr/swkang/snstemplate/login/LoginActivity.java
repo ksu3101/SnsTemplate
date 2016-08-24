@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,8 @@ public class LoginActivity
   ClearableEditText etPassword;
   @BindView(R.id.login_btn_login)
   StateButton       btnLogin;
+  @BindView(R.id.login_tv_signup)
+  TextView          tvBtnSignUp;
 
   @Override
   public BasePresenter attachPresenter() {
@@ -96,19 +99,22 @@ public class LoginActivity
 
   }
 
-  @OnClick({R.id.login_btn_login})
+  @OnClick({R.id.login_btn_login, R.id.login_tv_signup})
   public void onClick(View view) {
     if (view.getId() == R.id.login_btn_login) {
       // hide keyboards
       Utils.hideSoftKeyboard(this);
-
       final String email = etEmail.getText()
                                   .toString();
       final String pw = etPassword.getText()
                                   .toString();
-
       checkInputsAndProcess(email, pw);
     }
+
+    else if (view.getId() == R.id.login_tv_signup) {
+      startActivity_JoinUser();
+    }
+
   }
 
   private void setFocusEditText(@NonNull final EditText et, boolean clearText) {
@@ -127,6 +133,7 @@ public class LoginActivity
     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pw)) {
       etEmail.setEnabled(false);
       etPassword.setEnabled(false);
+      tvBtnSignUp.setClickable(false);
       btnLogin.setButtonState(StateButton.STATE_WAITING);
 
       // start Login jobs
@@ -181,6 +188,7 @@ public class LoginActivity
     if (resultCode != LoginResultCode.SUCCESS) {
       etEmail.setEnabled(true);
       etPassword.setEnabled(true);
+      tvBtnSignUp.setClickable(true);
       btnLogin.setButtonState(StateButton.STATE_ENABLED);
     }
   }

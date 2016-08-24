@@ -1,77 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_lgr01"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_lgr01"
+                android:orientation="vertical">
 
-   <RelativeLayout
+   <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center">
+      android:layout_height="wrap_content">
 
-      <LinearLayout
-         android:id="@+id/login_container_inputs"
+      <RelativeLayout
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="vertical">
+         android:layout_height="wrap_content">
 
-         <kr.swkang.snstemplate.utils.widgets.ClearableEditText
-            android:id="@+id/login_et_email"
-            style="@style/LoginEditText"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:hint="@string/c_email"
-            android:inputType="textEmailAddress"/>
-
-         <kr.swkang.snstemplate.utils.widgets.ClearableEditText
-            android:id="@+id/login_et_password"
-            style="@style/LoginEditText"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="26dp"
-            android:hint="@string/c_password"
-            android:inputType="textPassword"/>
-
-         <kr.swkang.snstemplate.utils.widgets.StateButton
-            android:id="@+id/login_btn_login"
+         <!-- somekind of app Logo images' here -->
+         <TextView
+            android:id="@+id/login_top_logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="26dp"
-            app:sb_btn_paddingBottom="12dp"
-            app:sb_btn_paddingLeft="34dp"
-            app:sb_btn_paddingRight="34dp"
-            app:sb_btn_paddingTop="12dp"
-            app:sb_btn_selector="@drawable/btn_c_white"
-            app:sb_btn_text_disabled="@string/c_login"
-            app:sb_btn_text_enable="@string/c_login"
-            app:sb_btn_text_wait="@string/c_login_w"
-            app:sb_btn_textcolor="@drawable/btn_c_white_text"
-            app:sb_btn_textsize="15sp"
-            app:sb_progressbar_color="@color/white"
-            app:sb_progressbar_visible="true"
-            app:sb_state="enable"/>
-      </LinearLayout>
+            android:layout_marginBottom="34dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="LOGO"
+            android:textColor="@color/white"
+            android:textSize="35sp"/>
 
-      <!-- somekind of app Logo images' here -->
+         <LinearLayout
+            android:id="@+id/login_container_inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_top_logo"
+            android:orientation="vertical">
 
-      <!-- find pw -->
-      <kr.swkang.spannabletextview.SpannableTextView
-         android:id="@+id/login_stv_find_pw"
+            <kr.swkang.snstemplate.utils.widgets.ClearableEditText
+               android:id="@+id/login_et_email"
+               style="@style/LoginEditText"
+               android:layout_marginLeft="24dp"
+               android:layout_marginRight="24dp"
+               android:hint="@string/c_email"
+               android:inputType="textEmailAddress"/>
+
+            <kr.swkang.snstemplate.utils.widgets.ClearableEditText
+               android:id="@+id/login_et_password"
+               style="@style/LoginEditText"
+               android:layout_marginLeft="24dp"
+               android:layout_marginRight="24dp"
+               android:layout_marginTop="26dp"
+               android:hint="@string/c_password"
+               android:inputType="textPassword"/>
+
+            <kr.swkang.snstemplate.utils.widgets.StateButton
+               android:id="@+id/login_btn_login"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="24dp"
+               android:layout_marginRight="24dp"
+               android:layout_marginTop="26dp"
+               app:sb_btn_paddingBottom="12dp"
+               app:sb_btn_paddingLeft="34dp"
+               app:sb_btn_paddingRight="34dp"
+               app:sb_btn_paddingTop="12dp"
+               app:sb_btn_selector="@drawable/btn_c_white"
+               app:sb_btn_text_disabled="@string/c_login"
+               app:sb_btn_text_enable="@string/c_login"
+               app:sb_btn_text_wait="@string/c_login_w"
+               app:sb_btn_textcolor="@drawable/btn_c_white_text"
+               app:sb_btn_textsize="15sp"
+               app:sb_progressbar_color="@color/white"
+               app:sb_progressbar_visible="true"
+               app:sb_state="enable"/>
+         </LinearLayout>
+
+         <!-- find pw -->
+         <kr.swkang.spannabletextview.SpannableTextView
+            android:id="@+id/login_stv_find_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_container_inputs"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/transparent_heavy_white"/>
+
+         <!-- facebook login button -->
+
+      </RelativeLayout>
+
+   </ScrollView>
+
+   <!-- sing up button -->
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:orientation="vertical">
+
+      <View
+         android:layout_width="match_parent"
+         android:layout_height="0.6dp"
+         android:background="@color/transparent_heavy_white"/>
+
+      <Button
+         android:id="@+id/login_tv_signup"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:layout_below="@id/login_container_inputs"
-         android:layout_marginTop="30dp"
+         android:background="@drawable/btn_c_twhite"
+         android:clickable="true"
          android:gravity="center"
-         android:lineSpacingExtra="3dp"
-         android:textColor="@color/transparent_heavy_white"/>
+         android:paddingBottom="20dp"
+         android:paddingLeft="24dp"
+         android:paddingRight="24dp"
+         android:paddingTop="20dp"
+         android:text="@string/sign_up_desc"
+         android:textColor="@color/white"/>
+   </LinearLayout>
 
-      <!-- facebook login button -->
-
-   </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

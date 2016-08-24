@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:enterFadeDuration="@integer/common_enter_anim_duration"
+          android:exitFadeDuration="@integer/common_exit_anim_duration">
+
+   <!-- Selected Status -->
+   <item android:state_selected="true">
+      <shape android:shape="rectangle">
+         <solid android:color="@color/transparent_medium_white"/>
+      </shape>
+   </item>
+
+   <!-- Pressed Status -->
+   <item android:state_pressed="true">
+      <shape android:shape="rectangle">
+         <solid android:color="@color/transparent_medium_white"/>
+      </shape>
+   </item>
+
+   <!-- Focused Status -->
+   <item android:state_focused="true">
+      <shape android:shape="rectangle">
+         <solid android:color="@color/transparent_medium_white"/>
+      </shape>
+   </item>
+
+   <!-- Activated Status -->
+   <item android:state_activated="true">
+      <shape android:shape="rectangle">
+         <solid android:color="@color/transparent_medium_white"/>
+      </shape>
+   </item>
+
+   <!-- Disabled Status -->
+   <item android:state_enabled="false">
+      <shape android:shape="rectangle">
+         <solid android:color="@color/transparent"/>
+      </shape>
+   </item>
+
+   <!-- Default Status -->
+   <item>
+      <shape android:shape="rectangle">
+         <solid android:color="@color/transparent_light_white"/>
+      </shape>
+   </item>
+
+
+</selector>

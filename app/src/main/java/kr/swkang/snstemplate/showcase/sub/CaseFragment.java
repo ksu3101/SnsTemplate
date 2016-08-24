@@ -49,10 +49,8 @@ public class CaseFragment
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     final View rootView = inflater.inflate(R.layout.showcase_sub_fragment, container, false);
-
     if (rootView != null) {
       ButterKnife.bind(this, rootView);
-
       Bundle args = getArguments();
       if (args != null) {
         final int position = args.getInt(BUNDLE_KEY_POSITION, 0);
@@ -61,15 +59,21 @@ public class CaseFragment
 
         switch (position) {
           case 0: {
+            ivIcons.setImageResource(R.drawable.ic_employees);
             ivBg.setImageResource(R.drawable.test01);
+            tvDesc.setText(getString(R.string.c_dummy_short_1));
             break;
           }
           case 1: {
+            ivIcons.setImageResource(R.drawable.ic_diagram);
             ivBg.setImageResource(R.drawable.test02);
+            tvDesc.setText(getString(R.string.c_dummy_short_2));
             break;
           }
           case 2: {
+            ivIcons.setImageResource(R.drawable.ic_team);
             ivBg.setImageResource(R.drawable.test03);
+            tvDesc.setText(getString(R.string.c_dummy_short_3));
             break;
           }
         }
