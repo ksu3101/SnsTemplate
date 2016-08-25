@@ -5,6 +5,7 @@ import android.util.Log;
 
 import kr.swkang.snstemplate.login.model.LoginResultCode;
 import kr.swkang.snstemplate.utils.SwObservable;
+import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;
 import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
@@ -67,7 +68,7 @@ public class LoginActivityPresenter
               final LoginResultCode resultCode = LoginResultCode.parseFromValue(result);
 
               // user info (DUMMY)
-              final UserInfo userInfo = new UserInfo();
+              final UserInfo userInfo = Utils.loadDummyUserInfo();
 
               // 로그인 결과 콜백
               view.resultOfLogin(userInfo, resultCode);

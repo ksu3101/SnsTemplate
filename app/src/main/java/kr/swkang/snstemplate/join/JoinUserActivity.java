@@ -1,12 +1,15 @@
 package kr.swkang.snstemplate.join;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import butterknife.ButterKnife;
 import kr.swkang.snstemplate.R;
+import kr.swkang.snstemplate.join.model.ValidationUserInfoResultCode;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
+import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
 
 /**
  * @author KangSung-Woo
@@ -29,6 +32,11 @@ public class JoinUserActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.join_activity);
     ButterKnife.bind(this);
+
+  }
+
+  @Override
+  public void resultOfSignUp(@NonNull UserInfo signedUserInfo, @NonNull ValidationUserInfoResultCode resultCode) {
 
   }
 
