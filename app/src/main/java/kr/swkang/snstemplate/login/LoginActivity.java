@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.swkang.snstemplate.R;
 import kr.swkang.snstemplate.login.model.LoginResultCode;
+import kr.swkang.snstemplate.utils.TextWatcherAdapter;
 import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.common.dialogs.SwDialog;
@@ -36,6 +38,21 @@ public class LoginActivity
     implements LoginActivityPresenter.View {
 
   private LoginActivityPresenter presenter;
+  private final TextWatcherAdapter textWatcherAdapter = new TextWatcherAdapter() {
+    @Override
+    public void afterTextChanged(Editable s) {
+      if (etEmail != null && etPassword != null && btnLogin != null) {
+        if (btnLogin.getState() != StateButton.STATE_WAITING) {
+          if (etEmail.getText().length() > 0 && etPassword.getText().length() > 0) {
+            btnLogin.setState(StateButton.STATE_ENABLED);
+          }
+          else {
+            btnLogin.setState(StateButton.STATE_DISABLED);
+          }
+        }
+      }
+    }
+  };
 
   @BindView(R.id.login_stv_find_pw)
   SpannableTextView stvFindPassword;
@@ -59,6 +76,9 @@ public class LoginActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.login_activity);
     ButterKnife.bind(this);
+
+    etEmail.addTextChangedListener(textWatcherAdapter);
+    etPassword.addTextChangedListener(textWatcherAdapter);
 
     stvFindPassword.addSpan(
         new SpannableTextView.Span(getString(R.string.find_pw_desc1))
@@ -134,7 +154,7 @@ public class LoginActivity
       etEmail.setEnabled(false);
       etPassword.setEnabled(false);
       tvBtnSignUp.setClickable(false);
-      btnLogin.setButtonState(StateButton.STATE_WAITING);
+      btnLogin.setState(StateButton.STATE_WAITING);
 
       // start Login jobs
       presenter.startLoginJobs(email, pw);
@@ -189,7 +209,7 @@ public class LoginActivity
       etEmail.setEnabled(true);
       etPassword.setEnabled(true);
       tvBtnSignUp.setClickable(true);
-      btnLogin.setButtonState(StateButton.STATE_ENABLED);
+      btnLogin.setState(StateButton.STATE_ENABLED);
     }
   }
 
