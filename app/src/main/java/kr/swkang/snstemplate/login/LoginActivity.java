@@ -198,7 +198,6 @@ public class LoginActivity
   @Override
   public void resultOfLogin(@NonNull UserInfo logginedUserInfo, @NonNull LoginResultCode resultCode) {
     this.processResultOfLogin(resultCode);
-
   }
 
   @Override

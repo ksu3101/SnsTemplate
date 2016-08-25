@@ -6,15 +6,30 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
 
 /**
  * @author KangSung-Woo
  * @since 2016/08/18
  */
 public class Utils {
+
+  public static UserInfo createDummyUserInfo(@Nullable String profileImgCachedURI,
+                                             @NonNull String userIdEmail,
+                                             @NonNull String password) {
+    final UserInfo userInfo = new UserInfo();
+    return userInfo;
+  }
+
+  public static UserInfo loadDummyUserInfo() {
+    return null;
+  }
+
 
   /**
    * 디바이스의 네트워크 연결 여부를 확인 한다.
