@@ -53,6 +53,7 @@ public class StateButton
   private boolean        isPbVisible;
   private int            btnTextSize;
   private Rect           btnPaddings;
+  private boolean        isInitialized;
 
   public StateButton(Context context) {
     this(context, null);
@@ -139,15 +140,16 @@ public class StateButton
       a.recycle();
     }
     updateLayouts();
+    this.isInitialized = true;
   }
 
-  public void setButtonState(@ButtonState int buttonState) {
+  public void setState(@ButtonState int buttonState) {
     this.state = buttonState;
     updateLayouts();
   }
 
   @ButtonState
-  public int getButtonState() {
+  public int getState() {
     return this.state;
   }
 

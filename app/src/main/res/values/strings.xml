@@ -58,7 +58,7 @@
    <string name="find_pw_desc2">여기</string>
    <string name="find_pw_desc3">를 눌러 비밀번호를 재 설정 하세요.</string>
 
-   <string name="sign_up_desc">계정이 없으신가요? 가입 하세요!!</string>
+   <string name="sign_up_desc">계정이 없으신가요? 가입 하기</string>
 
    <string name="c_dummy_short_1">Lorem ipsum dolor sit amet, id purus vel dui imperdiet.</string>
    <string name="c_dummy_short_2">Vitae ut et facilisis odio magna,</string>

@@ -202,7 +202,7 @@ public class SwDialog
       return this;
     }
 
-    public Builder title(@NonNull String titleStr) {
+    public Builder title(@Nullable String titleStr) {
       this.title = titleStr;
       return this;
     }
@@ -247,6 +247,12 @@ public class SwDialog
 
     public SwDialog build() {
       return new SwDialog(context, this);
+    }
+
+    public SwDialog buildAndShow() {
+      final SwDialog dlg = new SwDialog(context, this);
+      dlg.show();
+      return dlg;
     }
 
   }

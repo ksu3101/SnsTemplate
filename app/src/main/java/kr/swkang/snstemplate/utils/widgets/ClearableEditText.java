@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 Alex Yanchenko
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p/>
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,23 +17,23 @@ package kr.swkang.snstemplate.utils.widgets;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import kr.swkang.snstemplate.utils.TextWatcherAdapter;
-
 /**
  * To change clear icon, set
- * <p/>
+ * <p>
  * <pre>
  * android:drawableRight="@drawable/custom_icon"
  * </pre>
  */
 public class ClearableEditText
     extends EditText
-    implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcherAdapter.TextWatcherListener {
+    implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
 
   private Drawable              xD;
   private OnTextClearedListener listener;
@@ -108,13 +108,20 @@ public class ClearableEditText
   }
 
   @Override
-  public void onTextChanged(EditText view, String text) {
-    setClearIconVisible(isNotEmpty(text));
+  public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+  }
 
+  @Override
+  public void afterTextChanged(Editable editable) {
+    setClearIconVisible(isNotEmpty(editable != null ? editable.toString() : ""));
     /*
     if (isFocused()) {
       setClearIconVisible(isNotEmpty(text));
     } */
+  }
+
+  @Override
+  public void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
   }
 
   private void init() {
@@ -122,11 +129,13 @@ public class ClearableEditText
     if (xD == null) {
       xD = getResources().getDrawable(android.R.drawable.presence_offline);
     }
-    xD.setBounds(0, 0, xD.getIntrinsicWidth(), xD.getIntrinsicHeight());
-    setClearIconVisible(false);
-    super.setOnTouchListener(this);
-    super.setOnFocusChangeListener(this);
-    addTextChangedListener(new TextWatcherAdapter(this, this));
+    if (xD != null) {
+      xD.setBounds(0, 0, xD.getIntrinsicWidth(), xD.getIntrinsicHeight());
+      setClearIconVisible(false);
+      super.setOnTouchListener(this);
+      super.setOnFocusChangeListener(this);
+    }
+    addTextChangedListener(this);
   }
 
   protected void setClearIconVisible(boolean visible) {

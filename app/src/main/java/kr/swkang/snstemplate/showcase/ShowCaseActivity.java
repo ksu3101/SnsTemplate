@@ -104,8 +104,9 @@ public class ShowCaseActivity
 
       // start main Activity
       startActivity_Main();
-
+      finish();
     }
+
     else if (v.getId() == R.id.showcase_ibtn_left) {
       if (selectedPos > 0) {
         viewPager.setCurrentItem(--selectedPos, true);
