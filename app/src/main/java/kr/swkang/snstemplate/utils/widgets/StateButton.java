@@ -7,9 +7,11 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.DimenRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +55,6 @@ public class StateButton
   private boolean        isPbVisible;
   private int            btnTextSize;
   private Rect           btnPaddings;
-  private boolean        isInitialized;
 
   public StateButton(Context context) {
     this(context, null);
@@ -96,10 +97,7 @@ public class StateButton
 
       btnBg = a.getDrawable(R.styleable.StateButton_sb_btn_selector);
       btnTextColor = a.getColorStateList(R.styleable.StateButton_sb_btn_textcolor);
-      btnTextSize = a.getDimensionPixelSize(
-          R.styleable.StateButton_sb_btn_textsize,
-          (int) Utils.convertDpiToPixel(context.getResources(), 14)
-      );
+      btnTextSize = a.getDimensionPixelSize(R.styleable.StateButton_sb_btn_textsize, 14);
 
       pbColorList = a.getColorStateList(R.styleable.StateButton_sb_progressbar_color);
       pbDrawable = a.getDrawable(R.styleable.StateButton_sb_progressbar_drawable);
@@ -140,7 +138,6 @@ public class StateButton
       a.recycle();
     }
     updateLayouts();
-    this.isInitialized = true;
   }
 
   public void setState(@ButtonState int buttonState) {
@@ -192,6 +189,16 @@ public class StateButton
     updateLayouts();
   }
 
+  public void setBtnTextSize(int textSizeSP) {
+    this.btnTextSize = textSizeSP;
+    updateLayouts();
+  }
+
+  public void setBtnTextSizeRes(@DimenRes int textSizeResId) {
+    this.btnTextSize = getContext().getResources().getDimensionPixelSize(textSizeResId);
+    updateLayouts();
+  }
+
   private void updateLayouts() {
     Button btn = (Button) findViewById(R.id.statebutton_btn);
     ProgressBar pb = (ProgressBar) findViewById(R.id.statebutton_pb);
@@ -204,6 +211,9 @@ public class StateButton
     }
     if (btnBg != null) {
       btn.setBackgroundDrawable(btnBg);
+    }
+    if (btnTextSize > 0) {
+      btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, btnTextSize);
     }
 
     if (state == STATE_DISABLED) {
