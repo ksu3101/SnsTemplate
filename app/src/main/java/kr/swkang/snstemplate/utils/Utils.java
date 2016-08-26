@@ -23,6 +23,8 @@ public class Utils {
                                              @NonNull String userIdEmail,
                                              @NonNull String password) {
     final UserInfo userInfo = new UserInfo();
+    userInfo.setCoverImgUrl(profileImgCachedURI);
+    userInfo.setEmail(userIdEmail);
     return userInfo;
   }
 
