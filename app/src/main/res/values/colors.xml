@@ -67,6 +67,9 @@
    <color name="flat_red">#e74c3c</color>
    <color name="flat_red_sel">#c0392b</color>
    <color name="flat_red_dis">#26e74c3c</color>
+   <color name="flat_razzmatazz">#db0a5b</color>
+   <color name="flat_razzmatazz_sel">#9e0841</color>
+   <color name="flat_razzmatazz_dis">#26db0a5b</color>
    <color name="flat_clouds">#ecf0f1</color>
    <color name="flat_clouds_sel">#bdc3c7</color>
    <color name="flat_clouds_dis">#26ecf0f1</color>
