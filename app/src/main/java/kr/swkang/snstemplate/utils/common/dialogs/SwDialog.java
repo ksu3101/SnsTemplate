@@ -27,17 +27,17 @@ public class SwDialog
     extends Dialog
     implements View.OnClickListener {
 
-  public interface SwDialogOnButtonClickListener {
+  public interface OnDialogButtonClickListener {
     void onClicked(SwDialog dialog, View v);
   }
 
-  private Drawable                      iconDrawable;
-  private RoundedDrawableParams         iconDrawableParams;
-  private String                        title;
-  private String                        message;
-  private String                        positiveBtnTitle;
-  private String                        negativeBtnTitle;
-  private SwDialogOnButtonClickListener clickListener;
+  private Drawable                    iconDrawable;
+  private RoundedDrawableParams       iconDrawableParams;
+  private String                      title;
+  private String                      message;
+  private String                      positiveBtnTitle;
+  private String                      negativeBtnTitle;
+  private OnDialogButtonClickListener clickListener;
 
   private SwDialog(Context context, Builder b) {
     super(context);
@@ -170,14 +170,14 @@ public class SwDialog
   }
 
   public static class Builder {
-    Context                       context;
-    Drawable                      iconDrawable;
-    RoundedDrawableParams         iconDrawableParams;
-    String                        title;
-    String                        message;
-    String                        positiveBtnTitle;
-    String                        negativeBtnTitle;
-    SwDialogOnButtonClickListener clickListener;
+    Context                     context;
+    Drawable                    iconDrawable;
+    RoundedDrawableParams       iconDrawableParams;
+    String                      title;
+    String                      message;
+    String                      positiveBtnTitle;
+    String                      negativeBtnTitle;
+    OnDialogButtonClickListener clickListener;
 
     public Builder(@NonNull Context context) {
       this.context = context;
@@ -240,7 +240,7 @@ public class SwDialog
       return negativeButton(context.getString(btnTitleResId));
     }
 
-    public Builder buttonClickListener(@NonNull SwDialogOnButtonClickListener clickListener) {
+    public Builder buttonClickListener(@NonNull OnDialogButtonClickListener clickListener) {
       this.clickListener = clickListener;
       return this;
     }

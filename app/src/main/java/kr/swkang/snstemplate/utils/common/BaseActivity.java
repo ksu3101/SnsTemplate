@@ -205,13 +205,13 @@ public abstract class BaseActivity
     else {
       String dlgTitle = getString(R.string.error_network_common_title);
       String dlgMsg = getString(R.string.error_network_common_message);
-      SwDialog.SwDialogOnButtonClickListener clickListener = null;
+      SwDialog.OnDialogButtonClickListener clickListener = null;
 
       if (resultCode == LoginResultCode.FAILED_WRONG_INFOS) {
         // 잘못된 로그인 정보 -> 저장된 세션 삭제 하고 로그인 화면으로
         dlgTitle = getString(R.string.error_wrong_login_infos_title);
         dlgMsg = getString(R.string.error_wrong_login_infos_message);
-        clickListener = new SwDialog.SwDialogOnButtonClickListener() {
+        clickListener = new SwDialog.OnDialogButtonClickListener() {
           @Override
           public void onClicked(SwDialog dialog, View v) {
             // move to Login activity.
@@ -238,7 +238,7 @@ public abstract class BaseActivity
             .positiveButton(getString(R.string.c_ok))
             .buttonClickListener(
                 clickListener == null ?
-                    new SwDialog.SwDialogOnButtonClickListener() {
+                    new SwDialog.OnDialogButtonClickListener() {
                       @Override
                       public void onClicked(SwDialog dialog, View v) {
                         dialog.dismiss();
@@ -261,7 +261,7 @@ public abstract class BaseActivity
           .positiveButton(getString(R.string.c_join))
           .negativeButton(getString(R.string.c_cancel))
           .buttonClickListener(
-              new SwDialog.SwDialogOnButtonClickListener() {
+              new SwDialog.OnDialogButtonClickListener() {
                 @Override
                 public void onClicked(SwDialog dialog, View v) {
                   if (v.getId() == R.id.swdialog_btn_left) {

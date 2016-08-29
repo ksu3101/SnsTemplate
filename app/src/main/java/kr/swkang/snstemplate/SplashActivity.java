@@ -59,7 +59,7 @@ public class SplashActivity
           .message(getString(R.string.error_disabled_servcies_message))
           .positiveButton(getString(R.string.c_ok))
           .buttonClickListener(
-              new SwDialog.SwDialogOnButtonClickListener() {
+              new SwDialog.OnDialogButtonClickListener() {
                 @Override
                 public void onClicked(SwDialog dialog, View v) {
                   dialog.dismiss();
@@ -81,7 +81,7 @@ public class SplashActivity
           .message(getString(R.string.error_lastest_appversion_message))
           .positiveButton(getString(R.string.c_update))
           .buttonClickListener(
-              new SwDialog.SwDialogOnButtonClickListener() {
+              new SwDialog.OnDialogButtonClickListener() {
                 @Override
                 public void onClicked(SwDialog dialog, View v) {
                   // move to google play store

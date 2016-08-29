@@ -176,7 +176,7 @@ public class LoginActivity
             .message(dlgMsg)
             .positiveButton(getString(R.string.c_ok))
             .buttonClickListener(
-                new SwDialog.SwDialogOnButtonClickListener() {
+                new SwDialog.OnDialogButtonClickListener() {
                   @Override
                   public void onClicked(SwDialog dialog, View v) {
                     dialog.dismiss();
