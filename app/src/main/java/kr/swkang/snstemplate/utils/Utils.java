@@ -2,14 +2,25 @@ package kr.swkang.snstemplate.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
 
@@ -32,6 +43,60 @@ public class Utils {
     return null;
   }
 
+  /**
+   * 연결되어진 데이터 네트워크의 타입을 얻는다.
+   *
+   * @param context Context
+   * @return TYPE_MOBILE, TYPE_WIFI or -1
+   * @see ConnectivityManager
+   */
+  public static int getNetworkConnectionType(@NonNull Context context) {
+    ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (mgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) {
+      return ConnectivityManager.TYPE_MOBILE;
+    }
+    else if (mgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+      return ConnectivityManager.TYPE_WIFI;
+    }
+    else {
+      return -1;
+    }
+  }
+
+  /**
+   * 디바이스의 전화번호(MDN)를 얻는다.
+   *
+   * @param context Context
+   * @return 전화번호 문자열.
+   */
+  public static String getPhoneNumber(@NonNull Context context) {
+    TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    return tMgr.getLine1Number();
+  }
+
+  /**
+   * Calendar를 ISO8601 규격에 맞춘 시간 문자열로 얻는다.
+   *
+   * @param cal Calendar instance.
+   * @return ISO8601 규격에 맞춘 시간 문자열.
+   */
+  public static String getCalendar(Calendar cal) {
+    Date date = cal.getTime();
+    String format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault()).format(date);
+    return format.substring(0, 22) + ":" + format.substring(22);
+  }
+
+  /**
+   * 날짜 및 시간정보를 dateFormat에 맞추어서 얻는다.
+   *
+   * @param cal        날짜 및 시간의 Calendar 객체
+   * @param dateFormat SimpleDateFormat을 참고 할 것
+   * @return 시간 문자열
+   */
+  public static String getNow(Calendar cal, String dateFormat) {
+    Date date = cal.getTime();
+    return new SimpleDateFormat(dateFormat, Locale.getDefault()).format(date);
+  }
 
   /**
    * 디바이스의 네트워크 연결 여부를 확인 한다.
