@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -16,6 +19,11 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +37,7 @@ import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
  * @since 2016/08/18
  */
 public class Utils {
+  private static final String TAG = Utils.class.getSimpleName();
 
   public static UserInfo createDummyUserInfo(@Nullable String profileImgCachedURI,
                                              @NonNull String userIdEmail,
@@ -152,6 +161,42 @@ public class Utils {
   }
 
   /**
+   * Drawable1과 Drawable2간의 트랜지션 에니메이션을 적용한 TransitionDrawable을 만든다.
+   * 만들어진 TransitionDrawable의 객채의 startTransition(durationMillis)메소드를 이용하여
+   * 애니메이션을 시작 한다.
+   *
+   * @param layer1 before Drawable.
+   * @param layer2 after Drawable.
+   * @return {@link TransitionDrawable}
+   */
+  public static TransitionDrawable createTransitionDrawable(Drawable layer1, Drawable layer2) {
+    TransitionDrawable td = new TransitionDrawable(new Drawable[]{layer1, layer2});
+    td.setCrossFadeEnabled(true);
+    return td;
+  }
+
+  /**
+   * Drawable1(resId1) 과 Drawable2(resId2)간의 트랜지션 애니메이션을 적용한 TransitionDrwable을 만든다.  만들어진
+   * TransitionDrwable 객체의 startTransition(durationMillis)를 이용하여 애니메이션을 시작한다.
+   *
+   * @param res         Resources (from Context)
+   * @param layerResId1 before Drawable Resource ID.
+   * @param layerResId2 after Drawable Resource ID.
+   * @return {@link TransitionDrawable}
+   */
+  public static TransitionDrawable createTransitionDrawable(Resources res,
+                                                            int layerResId1,
+                                                            int layerResId2) {
+    if (res != null) {
+      TransitionDrawable td = new TransitionDrawable(new Drawable[]{res.getDrawable(layerResId1),
+          res.getDrawable(layerResId2)});
+      td.setCrossFadeEnabled(true);
+      return td;
+    }
+    return null;
+  }
+
+  /**
    * Pixel 단위 숫자를 DPI단위 Float형태의 숫자로 변환한다.
    *
    * @param res   Resources.
@@ -193,6 +238,200 @@ public class Utils {
    */
   public static float convertDpiToPixel(@NonNull Resources res, float dpi) {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, res.getDisplayMetrics());
+  }
+
+
+  /**
+   * Bitmap이미지를 리사이즈 한다.
+   *
+   * @param originalImg   리사이즈 대상 원본 Bitmap 이미지.
+   * @param maxResolution width, height 대상 중 최대 감안 크기.
+   * @return 리사이징 된 Bitmap 이미지.
+   */
+  public static Bitmap getResizeImg(Bitmap originalImg, int maxResolution) {
+    if (originalImg == null) return null;
+    final int width = originalImg.getWidth();
+    final int height = originalImg.getHeight();
+    int newWidth = width;
+    int newHeight = height;
+    float rate = 0.0f;
+
+    if (width > height) {
+      if (maxResolution < width) {
+        rate = maxResolution / (float) width;
+        newHeight = (int) (height * rate);
+        newWidth = maxResolution;
+      }
+    }
+    else {
+      if (maxResolution < height) {
+        rate = maxResolution / (float) height;
+        newWidth = (int) (width * rate);
+        newHeight = maxResolution;
+      }
+    }
+    return Bitmap.createScaledBitmap(originalImg, newWidth, newHeight, true);
+  }
+
+  /**
+   * 문자열 str이 이미지 경로 인지 여부를 확인 한다.
+   *
+   * @param str 이미지 경로인지 체크할 문자열
+   * @return true일 경우 이미지 경로
+   */
+  public static boolean isImagePath(String str) {
+    if (!TextUtils.isEmpty(str)) {
+      return (str.endsWith(".png") || str.endsWith(".jpg") || str.endsWith(".jpeg") || str.endsWith(".webp") || str.endsWith(".gif"));
+    }
+    return false;
+  }
+
+  /**
+   * 파일 하나를 삭제 한다.
+   *
+   * @param file 삭제할 파일의 경로 혹은 파일 객체
+   * @param <T>  String or File instance
+   * @return true일 경우 파일 삭제가 성공적으로 수행 됨.
+   */
+  public static <T> boolean fileDelete(T file) {
+    if (file != null) {
+      File targetFile = null;
+      if (file instanceof String) {
+        targetFile = new File((String) file);
+      }
+      else if (file instanceof File) {
+        targetFile = (File) file;
+      }
+      else {
+        Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
+        return false;
+      }
+      return targetFile.delete();
+    }
+    return false;
+  }
+
+
+  /**
+   * 파일 하나를 이동 한다. AsyncTask등에 태워서 사용 할 것
+   *
+   * @param fromPath 이동할 파일의 절대 경로
+   * @param target   이동할 경로 혹은 파일 객체
+   * @param <T>      String or File instance
+   * @return true일 경우 이동이 성공적으로 수행 됨.
+   */
+  public static <T> boolean fileMove(String fromPath, T target) {
+    if (!TextUtils.isEmpty(fromPath)) {
+      if (target != null) {
+        File targetFile = null;
+        if (target instanceof String) {
+          targetFile = new File((String) target);
+        }
+        else if (target instanceof File) {
+          targetFile = (File) target;
+        }
+        else {
+          // Uri는 getPathFromUri()메소드를 활용 할 것.
+          Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
+          return false;
+        }
+
+        File fromFile = new File(fromPath);
+        if (fromFile.exists()) {
+          if (!fromFile.renameTo(targetFile)) {
+            // File의 renameTo는 파일을 정상적으로 이동시키지 못하는 경우가 있다.
+            // 또한 이에 대한 예외조차 없다.
+            try {
+              // 기존 파일을 복사 하고 난 뒤 원본을 삭제 한다.
+              FileInputStream fis = new FileInputStream(fromFile);
+              FileOutputStream fos = new FileOutputStream(targetFile);
+
+              byte[] buf = new byte[1024];
+              int read = 0;
+              while ((read = fis.read(buf, 0, buf.length)) != -1) {
+                fos.write(buf, 0, read);
+              }
+              fis.close();
+              fos.close();
+
+              return fromFile.delete();
+
+            } catch (FileNotFoundException fnfe) {
+              Log.e(TAG, fnfe.getMessage());
+              return false;
+            } catch (IOException ioe) {
+              Log.e(TAG, ioe.getMessage());
+              return false;
+            }
+          }
+          else {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * 파일 하나를 복사 한다. AsyncTask등에 태워서 처리 할 것
+   *
+   * @param from   복사할 파일의 절대 경로 혹은 객체
+   * @param target 저장할 파일의 경로 혹은 객체
+   * @param <T>    String or File instance
+   * @return true일 경우 파일 복사가 성공적으로 수행 됨.
+   */
+  public static <T> boolean fileCopy(T from, T target) {
+    if (from != null) {
+      File fromFile = null;
+      if (from instanceof String) {
+        fromFile = new File((String) from);
+      }
+      else if (from instanceof File) {
+        fromFile = (File) from;
+      }
+      else {
+        Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
+        return false;
+      }
+
+      if (fromFile.exists()) {
+        File targetFile = null;
+        if (target != null) {
+          if (target instanceof String) {
+            targetFile = new File((String) target);
+          }
+          else if (target instanceof File) {
+            targetFile = (File) target;
+          }
+          else {
+            Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
+            return false;
+          }
+
+          try {
+            FileInputStream fis = new FileInputStream(fromFile);
+            FileOutputStream fos = new FileOutputStream(targetFile);
+            int readCount = 0;
+            byte[] buffer = new byte[1024];
+            while ((readCount = fis.read(buffer, 0, 1024)) != -1) {
+              fos.write(buffer, 0, readCount);
+            }
+            fos.close();
+            fis.close();
+
+          } catch (IOException ioe) {
+            Log.e(TAG, ioe.getMessage());
+            return false;
+          }
+
+          if (targetFile.length() > 0) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 
 }
