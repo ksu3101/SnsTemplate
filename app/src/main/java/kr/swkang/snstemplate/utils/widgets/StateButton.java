@@ -213,7 +213,7 @@ public class StateButton
       btn.setBackgroundDrawable(btnBg);
     }
     if (btnTextSize > 0) {
-      btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, btnTextSize);
+      btn.setTextSize(TypedValue.COMPLEX_UNIT_PX, btnTextSize);
     }
 
     if (state == STATE_DISABLED) {
