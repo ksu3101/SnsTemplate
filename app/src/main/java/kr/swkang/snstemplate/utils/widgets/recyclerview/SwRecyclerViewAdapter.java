@@ -198,7 +198,7 @@ public abstract class SwRecyclerViewAdapter<T>
     @Override
     public void onClick(View v) {
       if (clickListener != null) {
-        clickListener.onClicked(this, getAdapterPosition());
+        clickListener.onClicked(this, v, getAdapterPosition());
       }
     }
 

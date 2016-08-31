@@ -12,9 +12,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
-      android:layout_marginBottom="34dp"
+      android:layout_marginBottom="44dp"
       android:layout_marginTop="60dp"
-      android:background="@drawable/shape_border_white_box"
       android:gravity="center"
       android:paddingBottom="10dp"
       android:paddingLeft="22dp"
@@ -22,7 +21,7 @@
       android:paddingTop="10dp"
       android:text="LOGO_IMAGE"
       android:textColor="@color/white"
-      android:textSize="30sp"
+      android:textSize="18sp"
       android:textStyle="bold"/>
 
    <LinearLayout
