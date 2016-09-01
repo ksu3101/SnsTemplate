@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import kr.swkang.snstemplate.login.model.LoginResultCode;
-import kr.swkang.snstemplate.utils.SwObservable;
+import kr.swkang.snstemplate.utils.widgets.SwObservable;
 import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;

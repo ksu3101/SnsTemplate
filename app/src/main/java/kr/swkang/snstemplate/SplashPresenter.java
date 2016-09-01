@@ -3,7 +3,7 @@ package kr.swkang.snstemplate;
 import android.support.annotation.NonNull;
 
 import kr.swkang.snstemplate.login.model.LoginResultCode;
-import kr.swkang.snstemplate.utils.SwObservable;
+import kr.swkang.snstemplate.utils.widgets.SwObservable;
 import kr.swkang.snstemplate.utils.mvp.BasePresenter;
 import kr.swkang.snstemplate.utils.mvp.BaseView;
 import rx.Observable;

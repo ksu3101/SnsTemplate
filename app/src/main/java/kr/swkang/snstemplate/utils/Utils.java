@@ -1,23 +1,43 @@
 package kr.swkang.snstemplate.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.telephony.TelephonyManager;
+import android.text.Layout;
+import android.text.Selection;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,9 +45,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
@@ -53,23 +75,114 @@ public class Utils {
   }
 
   /**
-   * 연결되어진 데이터 네트워크의 타입을 얻는다.
+   * 안드로이드 운영체제의 버전(2.3, 4.4)를 얻는다.
+   *
+   * @return 안드로이드 운영체제 버전 문자열.
+   */
+  public static String getOSVersion() {
+    return Build.VERSION.RELEASE;
+  }
+
+  /**
+   * 앱의 이름을 얻는다. 앱을 찾을 수 없는 경우 "UNKNOWN"을 반혼 한다.
    *
    * @param context Context
-   * @return TYPE_MOBILE, TYPE_WIFI or -1
-   * @see ConnectivityManager
+   * @return App name or UNKNOWN.
    */
-  public static int getNetworkConnectionType(@NonNull Context context) {
-    ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    if (mgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) {
-      return ConnectivityManager.TYPE_MOBILE;
+  public static String getApplicationName(@NonNull Context context) {
+    PackageManager packageManager = context.getPackageManager();
+    ApplicationInfo applicationInfo = null;
+    try {
+      applicationInfo = packageManager.getApplicationInfo(context.getApplicationInfo().packageName, 0);
+    } catch (final PackageManager.NameNotFoundException e) {
+      Log.e(TAG, e.getMessage());
     }
-    else if (mgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
-      return ConnectivityManager.TYPE_WIFI;
+    return (String) (applicationInfo != null ? packageManager.getApplicationLabel(applicationInfo) : "UNKNOWN");
+  }
+
+  /**
+   * 앱의 버전 코드를 얻는다.
+   *
+   * @param context Context
+   * @return 0 or Version code integer value.
+   */
+  public static int getApplicationVersionCode(@NonNull Context context) {
+    int versionCode = 0;
+    try {
+      versionCode = context.getPackageManager()
+                           .getPackageInfo(context.getPackageName(), 0).versionCode;
+    } catch (PackageManager.NameNotFoundException nne) {
+      Log.e(TAG, nne.getMessage());
+    }
+    return versionCode;
+  }
+
+  /**
+   * 디바이스의 width, height를 구한다.
+   *
+   * @param context Context
+   * @return Point object.
+   */
+  public static Point getDeviceSize(@NonNull Context context) {
+    WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    Display display = wm.getDefaultDisplay();
+    Point size = new Point();
+    if (Build.VERSION.SDK_INT > 13) {
+      display.getSize(size);
     }
     else {
-      return -1;
+      size.x = display.getWidth();
+      size.y = display.getHeight();
     }
+    return size;
+  }
+
+
+  /**
+   * Display의 Size를 구한다. (상단 인디케이터 영역을 제외한 실제 표시 영역)
+   *
+   * @param context Context
+   * @return device size Point object.
+   */
+  public static Point getDisplaySize(@NonNull Context context) {
+    DisplayMetrics metrics = context.getResources()
+                                    .getDisplayMetrics();
+
+    Point size = new Point();
+    size.x = metrics.widthPixels;
+    size.y = (int) (metrics.heightPixels - 25 * metrics.density);
+
+    return size;
+  }
+
+  /**
+   * 디바이스의 Width값을 구한다.
+   *
+   * @param context Context
+   * @return device width.
+   */
+  public static int getDeviceWidth(Context context) {
+    return getDeviceSize(context).x;
+  }
+
+  /**
+   * 디바이스의 Height값을 구한다.
+   *
+   * @param context Context
+   * @return device height.
+   */
+  public static int getDeviceHeight(Context context) {
+    return getDeviceSize(context).y;
+  }
+
+  /**
+   * 해상도에 따른 비율 배수를 얻는다.
+   *
+   * @param context Context.
+   * @return Density multiplier value.
+   */
+  public static float getDensityValue(@NonNull Context context) {
+    return context.getResources().getDisplayMetrics().density;
   }
 
   /**
@@ -84,50 +197,11 @@ public class Utils {
   }
 
   /**
-   * Calendar를 ISO8601 규격에 맞춘 시간 문자열로 얻는다.
-   *
-   * @param cal Calendar instance.
-   * @return ISO8601 규격에 맞춘 시간 문자열.
-   */
-  public static String getCalendar(Calendar cal) {
-    Date date = cal.getTime();
-    String format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault()).format(date);
-    return format.substring(0, 22) + ":" + format.substring(22);
-  }
-
-  /**
-   * 날짜 및 시간정보를 dateFormat에 맞추어서 얻는다.
-   *
-   * @param cal        날짜 및 시간의 Calendar 객체
-   * @param dateFormat SimpleDateFormat을 참고 할 것
-   * @return 시간 문자열
-   */
-  public static String getNow(Calendar cal, String dateFormat) {
-    Date date = cal.getTime();
-    return new SimpleDateFormat(dateFormat, Locale.getDefault()).format(date);
-  }
-
-  /**
-   * 디바이스의 네트워크 연결 여부를 확인 한다.
-   *
-   * @param context Context
-   * @return true일 경우 온라인 상태. false 일 경우 오프라인 상태.
-   */
-  public static boolean isOnline(Context context) {
-    if (context != null) {
-      ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-      NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-      return (networkInfo != null && networkInfo.isConnected());
-    }
-    return false;
-  }
-
-  /**
    * 포커싱 된 뷰로 인해 등장한 소프트 키보드를 감 춘다.
    *
    * @param activity 키보드가 보여지고 있는 포커싱 된 뷰가 존재하는 액티비티
    */
-  public static void hideSoftKeyboard(Activity activity) {
+  public static void hideSoftKeyboard(@NonNull Activity activity) {
     hideSoftKeyboard(activity, activity.getCurrentFocus());
   }
 
@@ -137,8 +211,7 @@ public class Utils {
    * @param context Context
    * @param views   포커싱 된 뷰들
    */
-  public static void hideSoftKeyboard(Context context, View... views) {
-    if (views == null || context == null) return;
+  public static void hideSoftKeyboard(@NonNull Context context, @NonNull View... views) {
     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     for (View currentView : views) {
       if (currentView == null) continue;
@@ -153,47 +226,10 @@ public class Utils {
    * @param context Context
    * @param view    포커스받고 입력 받을 Input View.
    */
-  public static void showSoftKeyboard(@NonNull Context context, View view) {
-    if (view == null) return;
+  public static void showSoftKeyboard(@NonNull Context context, @NonNull View view) {
     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     view.requestFocus();
     imm.showSoftInput(view, 0);
-  }
-
-  /**
-   * Drawable1과 Drawable2간의 트랜지션 에니메이션을 적용한 TransitionDrawable을 만든다.
-   * 만들어진 TransitionDrawable의 객채의 startTransition(durationMillis)메소드를 이용하여
-   * 애니메이션을 시작 한다.
-   *
-   * @param layer1 before Drawable.
-   * @param layer2 after Drawable.
-   * @return {@link TransitionDrawable}
-   */
-  public static TransitionDrawable createTransitionDrawable(Drawable layer1, Drawable layer2) {
-    TransitionDrawable td = new TransitionDrawable(new Drawable[]{layer1, layer2});
-    td.setCrossFadeEnabled(true);
-    return td;
-  }
-
-  /**
-   * Drawable1(resId1) 과 Drawable2(resId2)간의 트랜지션 애니메이션을 적용한 TransitionDrwable을 만든다.  만들어진
-   * TransitionDrwable 객체의 startTransition(durationMillis)를 이용하여 애니메이션을 시작한다.
-   *
-   * @param res         Resources (from Context)
-   * @param layerResId1 before Drawable Resource ID.
-   * @param layerResId2 after Drawable Resource ID.
-   * @return {@link TransitionDrawable}
-   */
-  public static TransitionDrawable createTransitionDrawable(Resources res,
-                                                            int layerResId1,
-                                                            int layerResId2) {
-    if (res != null) {
-      TransitionDrawable td = new TransitionDrawable(new Drawable[]{res.getDrawable(layerResId1),
-          res.getDrawable(layerResId2)});
-      td.setCrossFadeEnabled(true);
-      return td;
-    }
-    return null;
   }
 
   /**
@@ -240,133 +276,65 @@ public class Utils {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, res.getDisplayMetrics());
   }
 
-
   /**
-   * Bitmap이미지를 리사이즈 한다.
+   * 레이아웃에서 EditText를 상속한 뷰를 제외한 모든 뷰에 키보드를 감추는 기능의 터치 이벤트를 넣는다.
    *
-   * @param originalImg   리사이즈 대상 원본 Bitmap 이미지.
-   * @param maxResolution width, height 대상 중 최대 감안 크기.
-   * @return 리사이징 된 Bitmap 이미지.
+   * @param context Context instance
+   * @param v       parent view group
    */
-  public static Bitmap getResizeImg(Bitmap originalImg, int maxResolution) {
-    if (originalImg == null) return null;
-    final int width = originalImg.getWidth();
-    final int height = originalImg.getHeight();
-    int newWidth = width;
-    int newHeight = height;
-    float rate = 0.0f;
-
-    if (width > height) {
-      if (maxResolution < width) {
-        rate = maxResolution / (float) width;
-        newHeight = (int) (height * rate);
-        newWidth = maxResolution;
-      }
-    }
-    else {
-      if (maxResolution < height) {
-        rate = maxResolution / (float) height;
-        newWidth = (int) (width * rate);
-        newHeight = maxResolution;
-      }
-    }
-    return Bitmap.createScaledBitmap(originalImg, newWidth, newHeight, true);
-  }
-
-  /**
-   * 문자열 str이 이미지 경로 인지 여부를 확인 한다.
-   *
-   * @param str 이미지 경로인지 체크할 문자열
-   * @return true일 경우 이미지 경로
-   */
-  public static boolean isImagePath(String str) {
-    if (!TextUtils.isEmpty(str)) {
-      return (str.endsWith(".png") || str.endsWith(".jpg") || str.endsWith(".jpeg") || str.endsWith(".webp") || str.endsWith(".gif"));
-    }
-    return false;
-  }
-
-  /**
-   * 파일 하나를 삭제 한다.
-   *
-   * @param file 삭제할 파일의 경로 혹은 파일 객체
-   * @param <T>  String or File instance
-   * @return true일 경우 파일 삭제가 성공적으로 수행 됨.
-   */
-  public static <T> boolean fileDelete(T file) {
-    if (file != null) {
-      File targetFile = null;
-      if (file instanceof String) {
-        targetFile = new File((String) file);
-      }
-      else if (file instanceof File) {
-        targetFile = (File) file;
-      }
-      else {
-        Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
-        return false;
-      }
-      return targetFile.delete();
-    }
-    return false;
-  }
-
-
-  /**
-   * 파일 하나를 이동 한다. AsyncTask등에 태워서 사용 할 것
-   *
-   * @param fromPath 이동할 파일의 절대 경로
-   * @param target   이동할 경로 혹은 파일 객체
-   * @param <T>      String or File instance
-   * @return true일 경우 이동이 성공적으로 수행 됨.
-   */
-  public static <T> boolean fileMove(String fromPath, T target) {
-    if (!TextUtils.isEmpty(fromPath)) {
-      if (target != null) {
-        File targetFile = null;
-        if (target instanceof String) {
-          targetFile = new File((String) target);
-        }
-        else if (target instanceof File) {
-          targetFile = (File) target;
-        }
-        else {
-          // Uri는 getPathFromUri()메소드를 활용 할 것.
-          Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
-          return false;
-        }
-
-        File fromFile = new File(fromPath);
-        if (fromFile.exists()) {
-          if (!fromFile.renameTo(targetFile)) {
-            // File의 renameTo는 파일을 정상적으로 이동시키지 못하는 경우가 있다.
-            // 또한 이에 대한 예외조차 없다.
-            try {
-              // 기존 파일을 복사 하고 난 뒤 원본을 삭제 한다.
-              FileInputStream fis = new FileInputStream(fromFile);
-              FileOutputStream fos = new FileOutputStream(targetFile);
-
-              byte[] buf = new byte[1024];
-              int read = 0;
-              while ((read = fis.read(buf, 0, buf.length)) != -1) {
-                fos.write(buf, 0, read);
+  public static void setOnHideKeyboardTouchUI(@NonNull final Context context, View v) {
+    if (v != null) {
+      if (!(v instanceof EditText)) {
+        v.setOnTouchListener(
+            new View.OnTouchListener() {
+              @Override
+              public boolean onTouch(View et, MotionEvent event) {
+                hideSoftKeyboard(context, et);
+                return false;
               }
-              fis.close();
-              fos.close();
-
-              return fromFile.delete();
-
-            } catch (FileNotFoundException fnfe) {
-              Log.e(TAG, fnfe.getMessage());
-              return false;
-            } catch (IOException ioe) {
-              Log.e(TAG, ioe.getMessage());
-              return false;
             }
-          }
-          else {
-            return true;
-          }
+        );
+      }
+      if (v instanceof ViewGroup) {
+        for (int i = 0; i < ((ViewGroup) v).getChildCount(); i++) {
+          View childView = ((ViewGroup) v).getChildAt(i);
+          setOnHideKeyboardTouchUI(context, childView);
+        }
+      }
+    }
+  }
+
+  /**
+   * EditText에서 현재 커서의 위치를 EditText 텍스트 상의 Line number를 반환 한다.
+   *
+   * @param et EditText instance
+   * @return line integer number
+   */
+  public static int getCurrentCursorLineOfEditText(EditText et) {
+    if (et != null) {
+      final int selectionStart = Selection.getSelectionStart(et.getText());
+      Layout layout = et.getLayout();
+      if (!(selectionStart == -1)) {
+        return layout.getLineForOffset(selectionStart);
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * serviceNameTag의 서비스가 현재 실행중(Running)인지 여부를 얻는다.
+   *
+   * @param context        Context
+   * @param serviceNameTag 실행중 여부를 확인 할 서비스의 태그 문자열.
+   * @return true or false
+   */
+  public static boolean isServiceRunning(@NonNull Context context, @Nullable String serviceNameTag) {
+    if (serviceNameTag != null) {
+      ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+      for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+        if (service.service.getClassName()
+                           .equals(serviceNameTag)) {
+          return true;
         }
       }
     }
@@ -374,64 +342,93 @@ public class Utils {
   }
 
   /**
-   * 파일 하나를 복사 한다. AsyncTask등에 태워서 처리 할 것
+   * 디바이스에서 NavigationBar를 사용하는지 여부를 얻는다.
    *
-   * @param from   복사할 파일의 절대 경로 혹은 객체
-   * @param target 저장할 파일의 경로 혹은 객체
-   * @param <T>    String or File instance
-   * @return true일 경우 파일 복사가 성공적으로 수행 됨.
+   * @param context Context object.
+   * @return true일 경우 NavigationBar를 사용 중.
    */
-  public static <T> boolean fileCopy(T from, T target) {
-    if (from != null) {
-      File fromFile = null;
-      if (from instanceof String) {
-        fromFile = new File((String) from);
+  public static boolean hasNavigationBar(@NonNull Context context) {
+    boolean hasMenuKey = ViewConfigurationCompat.hasPermanentMenuKey(ViewConfiguration.get(context));
+    boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
+    return (!hasMenuKey && !hasBackKey);
+  }
+
+
+  /**
+   * 하단 Navigation bar의 높이를 얻는다.
+   *
+   * @param context Context instance
+   * @return pixel size of bottom of Navigation bar height or 0
+   */
+  public static int getNavigationBarHeight(Context context) {
+    if (context != null) {
+      int statusBarHeightResourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+      if (statusBarHeightResourceId > 0) {
+        return context.getResources().getDimensionPixelSize(statusBarHeightResourceId);
       }
-      else if (from instanceof File) {
-        fromFile = (File) from;
+    }
+    return 0;
+  }
+
+  /**
+   * StatusBar의 높이를 얻는다.
+   *
+   * @param context Context instance
+   * @return pixel size of Statusbar height or 0
+   */
+  public static int getStatusBarHeight(Context context) {
+    if (context != null) {
+      int statusBarHeightResourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+      if (statusBarHeightResourceId > 0) {
+        return context.getResources().getDimensionPixelSize(statusBarHeightResourceId);
       }
-      else {
-        Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
-        return false;
-      }
+    }
+    return 0;
+  }
 
-      if (fromFile.exists()) {
-        File targetFile = null;
-        if (target != null) {
-          if (target instanceof String) {
-            targetFile = new File((String) target);
-          }
-          else if (target instanceof File) {
-            targetFile = (File) target;
-          }
-          else {
-            Log.w(TAG, "File이나 String파일 절대 경로만 가능 합니다.");
-            return false;
-          }
-
-          try {
-            FileInputStream fis = new FileInputStream(fromFile);
-            FileOutputStream fos = new FileOutputStream(targetFile);
-            int readCount = 0;
-            byte[] buffer = new byte[1024];
-            while ((readCount = fis.read(buffer, 0, 1024)) != -1) {
-              fos.write(buffer, 0, readCount);
-            }
-            fos.close();
-            fis.close();
-
-          } catch (IOException ioe) {
-            Log.e(TAG, ioe.getMessage());
-            return false;
-          }
-
-          if (targetFile.length() > 0) {
-            return true;
-          }
-        }
+  /**
+   * GPS, Network Provider를 사용 할 수 있는지 여부를 얻는다.
+   *
+   * @param context Context instance
+   * @return true일 경우 둘 중 하나 이상의 Provider를 사용 할 수 있다.
+   */
+  public static boolean isEnableLocationProviders(@NonNull Context context) {
+    LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    if (locationManager != null) {
+      if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+          || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        return true;
       }
     }
     return false;
+  }
+
+  /**
+   * 입력한 x, y좌표가 View의 영역 내(Bound)에 존재하는지 여부를 얻는다.
+   *
+   * @param view  조사할 View의 instance.
+   * @param point x, y좌표의 객체.
+   * @return true일 경우 x, y좌표가 View내에 존재 한다.
+   */
+  public static boolean inViewBounds(@NonNull View view, Point point) {
+    return inViewBounds(view, point.x, point.y);
+  }
+
+  /**
+   * 입력한 x, y좌표가 View의 영역 내(Bound)에 존재하는지 여부를 얻는다.
+   *
+   * @param view 조사할 View의 instance.
+   * @param x    x 좌표.
+   * @param y    y 좌표.
+   * @return true 일 경우 x, y 좌표가 View내에 존재 한다.
+   */
+  public static boolean inViewBounds(@NonNull View view, int x, int y) {
+    final Rect outRect = new Rect();
+    int[] location = new int[2];
+    view.getDrawingRect(outRect);
+    view.getLocationOnScreen(location);
+    outRect.offset(location[0], location[1]);
+    return outRect.contains(x, y);
   }
 
 }

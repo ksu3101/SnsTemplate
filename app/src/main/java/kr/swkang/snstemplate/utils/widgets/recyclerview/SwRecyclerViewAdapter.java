@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kr.swkang.snstemplate.utils.OnViewClickListener;
+import kr.swkang.snstemplate.utils.widgets.OnViewClickListener;
 
 /**
  * @author KangSung-Woo

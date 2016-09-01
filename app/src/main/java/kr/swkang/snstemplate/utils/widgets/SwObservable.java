@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils;
+package kr.swkang.snstemplate.utils.widgets;
 
 import android.support.annotation.NonNull;
 
