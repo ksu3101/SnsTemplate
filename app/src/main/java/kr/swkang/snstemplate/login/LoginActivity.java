@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kr.swkang.snstemplate.R;
 import kr.swkang.snstemplate.login.model.LoginResultCode;
-import kr.swkang.snstemplate.utils.TextWatcherAdapter;
+import kr.swkang.snstemplate.utils.widgets.TextWatcherAdapter;
 import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.common.dialogs.SwDialog;

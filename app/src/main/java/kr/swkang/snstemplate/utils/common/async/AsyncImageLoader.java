@@ -1,4 +1,4 @@
-package kr.swkang.snstemplate.utils;
+package kr.swkang.snstemplate.utils.common.async;
 
 
 import android.content.Context;
@@ -24,6 +24,10 @@ import android.widget.ImageView;
 import java.io.BufferedInputStream;
 import java.net.URL;
 import java.net.URLConnection;
+
+import kr.swkang.snstemplate.utils.BitmapUtils;
+import kr.swkang.snstemplate.utils.FileUtils;
+import kr.swkang.snstemplate.utils.Utils;
 
 /**
  * @author KangSung-Woo
@@ -68,7 +72,7 @@ public class AsyncImageLoader {
   }
 
   private void getImageFromNetwork(final String imageUrl, final ImageView imageView) {
-    if (!TextUtils.isEmpty(imageUrl) && Utils.isImagePath(imageUrl)) {
+    if (!TextUtils.isEmpty(imageUrl) && FileUtils.isImagePath(imageUrl)) {
       imgLoader = new AsyncTask<Void, Void, Bitmap>() {
         @Override
         protected void onPreExecute() {
@@ -132,7 +136,7 @@ public class AsyncImageLoader {
                   if (height <= 0) {
                     // 될 수 있으면 ratio에 맞춘 리사이징을 하도록 유도 한다.
                     // 유도 후 scaletype에 맞추어 이미지뷰에 세팅 한다.
-                    result = Utils.getResizeImg(result, width);
+                    result = BitmapUtils.getResizeImg(result, width);
                   }
                   else {
                     result = Bitmap.createScaledBitmap(result, width, height, true);

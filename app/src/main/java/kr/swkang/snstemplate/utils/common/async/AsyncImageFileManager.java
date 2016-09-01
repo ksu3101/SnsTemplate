@@ -1,6 +1,5 @@
-package kr.swkang.snstemplate.utils;
+package kr.swkang.snstemplate.utils.common.async;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -22,9 +21,10 @@ public class AsyncImageFileManager
     extends AsyncTask<Void, Void, Void> {
   private static final String TAG = AsyncImageFileManager.class.getSimpleName();
 
-  public static final int FILE_SAVE  = 0;
-  public static final int FILE_LOAD  = 1;
-  public static final int FILE_DELTE = 2;
+  public static final int FILE_SAVE   = 0;
+  public static final int FILE_MOVE   = 1;
+  public static final int FILE_COPY   = 2;
+  public static final int FILE_DELETE = 3;
 
   private OnJobCompleted       listener;
   private List<FileDescriptor> queue;
@@ -112,8 +112,9 @@ public class AsyncImageFileManager
 
   @IntDef(flag = true, value = {
       FILE_SAVE,
-      FILE_LOAD,
-      FILE_DELTE
+      FILE_MOVE,
+      FILE_COPY,
+      FILE_DELETE
   })
   @Retention(RetentionPolicy.SOURCE)
   public @interface JobDescriptor {
