@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import kr.swkang.snstemplate.login.model.LoginResultCode;
+import kr.swkang.snstemplate.utils.NetworkUtils;
 import kr.swkang.snstemplate.utils.Utils;
 import kr.swkang.snstemplate.utils.common.BaseActivity;
 import kr.swkang.snstemplate.utils.common.dialogs.SwDialog;
@@ -28,7 +29,7 @@ public class SplashActivity
     setContentView(R.layout.splash_activity);
 
     // 인터넷에 연결되었는지 여부를 체크 한다.
-    if (!Utils.isOnline(this)) {
+    if (!NetworkUtils.isOnline(this)) {
       resultOfAutoLoginUser(LoginResultCode.NOT_CONNECTED_NETWORK);
     }
     else {

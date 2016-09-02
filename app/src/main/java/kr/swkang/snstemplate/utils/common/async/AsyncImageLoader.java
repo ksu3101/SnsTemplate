@@ -25,9 +25,9 @@ import java.io.BufferedInputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import kr.swkang.snstemplate.utils.AnimationUtils;
 import kr.swkang.snstemplate.utils.BitmapUtils;
 import kr.swkang.snstemplate.utils.FileUtils;
-import kr.swkang.snstemplate.utils.Utils;
 
 /**
  * @author KangSung-Woo
@@ -166,7 +166,7 @@ public class AsyncImageLoader {
               imageView.clearAnimation();
               final Drawable beforeDrawable = imageView.getDrawable();
               final TransitionDrawable transitionDrawable =
-                  Utils.createTransitionDrawable(
+                  AnimationUtils.createTransitionDrawable(
                       (beforeDrawable == null ? (beforeTransitionDrawable != null ? beforeTransitionDrawable : new ColorDrawable(DEFAULT_COLOR)) : beforeDrawable),
                       new BitmapDrawable(resultImg)
                   );
