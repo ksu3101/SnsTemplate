@@ -431,4 +431,31 @@ public class Utils {
     return outRect.contains(x, y);
   }
 
+  /**
+   * OS 버전이 Lollipop버전 이상인지 여부를 얻는다.
+   *
+   * @return true일 경우 Lollipop 버전 이상.
+   */
+  public static boolean isOverLollipop() {
+    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+  }
+
+  /**
+   * OS 버전이 M(Marshmallow)버전 이상인지 여부를 얻는다.
+   *
+   * @return true일 경우 M(23) 버전 이상.
+   */
+  public static boolean isOverMarshmallow() {
+    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
+  }
+
+  /**
+   * OS 버전이 N(Nougat) 버전 이상인지 여부를 얻는다.
+   *
+   * @return true일 경우 N(24) 버전 이상. 
+   */
+  public static boolean isOverNougat() {
+    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
+  }
+
 }
