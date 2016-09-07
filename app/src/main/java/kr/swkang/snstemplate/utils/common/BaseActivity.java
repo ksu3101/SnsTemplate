@@ -125,6 +125,10 @@ public abstract class BaseActivity
 
   // - - Common methods - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  public SwApplication getApplications() {
+    return SwApplication.getInstance();
+  }
+
   /**
    * 액티비티 트렌지션을 추가 한다.
    * Intent를 통해서 startActivity() 하고 난 뒤에 이 메소드를 호출 하면 된다.

@@ -1,5 +1,6 @@
 package kr.swkang.snstemplate.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,7 +12,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.widget.LoginButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +70,10 @@ public class LoginActivity
   StateButton       btnLogin;
   @BindView(R.id.login_tv_signup)
   TextView          tvBtnSignUp;
+  @BindView(R.id.login_facebook_container)
+  LinearLayout      btnFbLogin;
+  @BindView(R.id.login_facebook_login_btn)
+  LoginButton       fbBtnLogin;
 
   @Override
   public BasePresenter attachPresenter() {
@@ -119,7 +129,7 @@ public class LoginActivity
 
   }
 
-  @OnClick({R.id.login_btn_login, R.id.login_tv_signup})
+  @OnClick({R.id.login_btn_login, R.id.login_tv_signup, R.id.login_facebook_container})
   public void onClick(View view) {
     if (view.getId() == R.id.login_btn_login) {
       // hide keyboards
@@ -135,6 +145,16 @@ public class LoginActivity
       startActivity_JoinUser();
     }
 
+    else if (view.getId() == R.id.login_facebook_container) {
+      fbBtnLogin.performClick();
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    // process Facebook login result codes.
+    getApplications().getFacebookLoginManager().onActivityResult(requestCode, resultCode, data);
+    super.onActivityResult(requestCode, resultCode, data);
   }
 
   private void setFocusEditText(@NonNull final EditText et, boolean clearText) {

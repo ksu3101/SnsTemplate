@@ -38,6 +38,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,6 +62,8 @@ import kr.swkang.snstemplate.utils.mvp.models.UserInfo;
 public class Utils {
   private static final String TAG = Utils.class.getSimpleName();
 
+  private static Toast toast;
+
   public static UserInfo createDummyUserInfo(@Nullable String profileImgCachedURI,
                                              @NonNull String userIdEmail,
                                              @NonNull String password) {
@@ -72,6 +75,22 @@ public class Utils {
 
   public static UserInfo loadDummyUserInfo() {
     return null;
+  }
+
+  /**
+   * show Toast message
+   *
+   * @param context Context instance
+   * @param msg     message text.
+   */
+  public static void showToast(@NonNull Context context, @NonNull String msg) {
+    if (toast != null) {
+      toast.setText(msg);
+    }
+    else {
+      toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+    }
+    toast.show();
   }
 
   /**
@@ -452,7 +471,7 @@ public class Utils {
   /**
    * OS 버전이 N(Nougat) 버전 이상인지 여부를 얻는다.
    *
-   * @return true일 경우 N(24) 버전 이상. 
+   * @return true일 경우 N(24) 버전 이상.
    */
   public static boolean isOverNougat() {
     return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);

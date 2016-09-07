@@ -2,6 +2,7 @@
    <string name="app_name">SnsTemplate</string>
 
    <string name="c_login">로그인</string>
+   <string name="c_login_fb">Facebook으로 로그인</string>
    <string name="c_login_w">로그인중 입니다.</string>
    <string name="c_logout">로그아웃</string>
    <string name="c_join">회원가입</string>

@@ -68,21 +68,64 @@
          app:sb_progressbar_color="@color/white"
          app:sb_progressbar_visible="true"
          app:sb_state="disabled"/>
+
+      <!-- find pw -->
+      <kr.swkang.spannabletextview.SpannableTextView
+         android:id="@+id/login_stv_find_pw"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="30dp"
+         android:gravity="center"
+         android:lineSpacingExtra="3dp"
+         android:textColor="@color/transparent_heavy_white"/>
+
+      <!-- separator -->
+      <View
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_marginBottom="24dp"
+         android:layout_marginLeft="22dp"
+         android:layout_marginRight="22dp"
+         android:layout_marginTop="24dp"
+         android:background="@color/transparent_heavy_white"/>
+
+      <!-- facebook login -->
+      <LinearLayout
+         android:id="@+id/login_facebook_container"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="22dp"
+         android:layout_marginRight="22dp"
+         android:gravity="center"
+         android:orientation="horizontal"
+         android:paddingBottom="6dp"
+         android:paddingTop="6dp">
+
+         <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/fb_login_ic"/>
+
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:text="@string/c_login_fb"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+         <!-- com.facebook.login.widget.LoginButton is here -->
+         <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_facebook_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+      </LinearLayout>
+
    </LinearLayout>
-
-   <!-- find pw -->
-   <kr.swkang.spannabletextview.SpannableTextView
-      android:id="@+id/login_stv_find_pw"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/login_container_inputs"
-      android:layout_marginTop="30dp"
-      android:gravity="center"
-      android:lineSpacingExtra="3dp"
-      android:textColor="@color/transparent_heavy_white"/>
-
-   <!-- TODO : facebook login button here -->
-
 
    <!-- sing up button -->
    <LinearLayout
