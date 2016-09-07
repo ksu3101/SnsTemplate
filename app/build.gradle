@@ -7,10 +7,13 @@ android {
 
     defaultConfig {
         applicationId "kr.swkang.snstemplate"
-        minSdkVersion 12
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+
+        // facebook app id
+        resValue("string", "FB_APPID", FB_APPID)
     }
     buildTypes {
         release {
@@ -26,6 +29,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.android.support:cardview-v7:24.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'kr.swkang.swimageview:swimageview:1.0.4'
