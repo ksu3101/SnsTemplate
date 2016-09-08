@@ -35,6 +35,16 @@ public class StringUtils {
   private static final String TAG = StringUtils.class.getSimpleName();
 
   /**
+   * 입력한 문자열이 Null이거나 비어있는지 여부를 반환 한다.
+   *
+   * @param str 검사할 문자열
+   * @return 문자열의 길이가 1 이상(비어있지 않음)일 경우 true, 아니면 false를 반환
+   */
+  public static boolean isEmpty(String str) {
+    return TextUtils.isEmpty(str);
+  }
+
+  /**
    * 입력한 두개의 문자열이 동일한 문자열인지 검사한다
    *
    * @param str  검사할 문자열 1

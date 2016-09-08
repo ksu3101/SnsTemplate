@@ -3,6 +3,7 @@ package kr.swkang.snstemplate.utils.mvp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class UserInfo
     this.coverText = null;
     this.follower = 0;
     this.following = 0;
-    this.postThumbnailUrls = null;
+    this.postThumbnailUrls = new ArrayList<>();
   }
 
   public int getId() {
@@ -135,6 +136,9 @@ public class UserInfo
 
   @Override
   public void writeToParcel(Parcel dest, int flags) {
+    if (postThumbnailUrls == null) {
+      this.postThumbnailUrls = new ArrayList<>();
+    }
     dest.writeInt(this.id);
     dest.writeString(this.email);
     dest.writeString(this.nickName);
