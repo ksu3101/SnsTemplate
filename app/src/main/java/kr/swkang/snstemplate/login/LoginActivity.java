@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.widget.LoginButton;
 
 import butterknife.BindView;
@@ -71,7 +69,7 @@ public class LoginActivity
   @BindView(R.id.login_tv_signup)
   TextView          tvBtnSignUp;
   @BindView(R.id.login_facebook_container)
-  LinearLayout      btnFbLogin;
+  LinearLayout      containerFbLogin;
   @BindView(R.id.login_facebook_login_btn)
   LoginButton       fbBtnLogin;
 
@@ -138,7 +136,7 @@ public class LoginActivity
                                   .toString();
       final String pw = etPassword.getText()
                                   .toString();
-      checkInputsAndProcess(email, pw);
+      startLoginJobBeforeValidationInputs(email, pw);
     }
 
     else if (view.getId() == R.id.login_tv_signup) {
@@ -157,6 +155,12 @@ public class LoginActivity
     super.onActivityResult(requestCode, resultCode, data);
   }
 
+  /**
+   * EditText의 포커스를 주고 일정 딜레이 후 키보드를 등장하게 한다.
+   *
+   * @param et        EditText instance.
+   * @param clearText if true will be text clear.
+   */
   private void setFocusEditText(@NonNull final EditText et, boolean clearText) {
     if (clearText) et.setText("");
     new Handler().postDelayed(
@@ -169,11 +173,19 @@ public class LoginActivity
         , 150);
   }
 
-  private void checkInputsAndProcess(final String email, final String pw) {
+  /**
+   * 입력된 로그인값들을 확인 후 로그인을 실행 한다. 입력된 값들에 오류가 있을 시 다이얼로그를
+   * 출력 한다.
+   *
+   * @param email email text.
+   * @param pw    password text.
+   */
+  private void startLoginJobBeforeValidationInputs(final String email, final String pw) {
     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pw)) {
       etEmail.setEnabled(false);
       etPassword.setEnabled(false);
       tvBtnSignUp.setClickable(false);
+      containerFbLogin.setEnabled(false);
       btnLogin.setState(StateButton.STATE_WAITING);
 
       // start Login jobs
@@ -228,6 +240,7 @@ public class LoginActivity
       etEmail.setEnabled(true);
       etPassword.setEnabled(true);
       tvBtnSignUp.setClickable(true);
+      containerFbLogin.setEnabled(true);
       btnLogin.setState(StateButton.STATE_ENABLED);
     }
   }
