@@ -89,4 +89,6 @@
    <color name="flat_def_black_sel">@color/darkGray</color>
    <color name="flat_def_black_dis">#26000000</color>
 
+   <color name="siv_default_dimm">#4d000000</color>
+
 </resources>
