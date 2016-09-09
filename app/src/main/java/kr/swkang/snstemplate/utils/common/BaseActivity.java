@@ -219,6 +219,7 @@ public abstract class BaseActivity
           @Override
           public void onClicked(SwDialog dialog, View v) {
             // move to Login activity.
+            dialog.dismiss();
             startActivity_Login();
           }
         };
