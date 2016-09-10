@@ -1,44 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/bg_lgr02"
-              android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-   <!-- somekind of app Logo images' here -->
-   <TextView
-      android:id="@+id/login_top_logo"
-      android:layout_width="wrap_content"
+   <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginBottom="44dp"
-      android:layout_marginTop="60dp"
-      android:gravity="center"
-      android:paddingBottom="10dp"
-      android:paddingLeft="22dp"
-      android:paddingRight="22dp"
-      android:paddingTop="10dp"
-      android:text="LOGO_IMAGE"
-      android:textColor="@color/white"
-      android:textSize="18sp"
-      android:textStyle="bold"/>
+      android:background="@drawable/bg_lgr02"
+      android:orientation="vertical">
 
-   <kr.swkang.swimageview.SwImageView
-      android:layout_width="150dp"
-      android:layout_height="150dp"
-      android:layout_gravity="center_horizontal"
-      android:clickable="true"
-      android:src="@drawable/man_photo_ic"
-      android:scaleType="centerCrop"
-      app:siv_border_color="@color/white"
-      app:siv_border_width="3dp"
-      app:siv_click_color="@color/siv_default_dimm"
-      app:siv_click_enter_duration="150"
-      app:siv_click_exit_duration="150"
-      app:siv_enable_transition="true"
-      app:siv_shapetype="circle"
-      app:siv_transition_duration="150"/>
+      <!-- somekind of app Logo images' here -->
+      <TextView
+         android:id="@+id/login_top_logo"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginBottom="44dp"
+         android:layout_marginTop="60dp"
+         android:gravity="center"
+         android:paddingBottom="10dp"
+         android:paddingLeft="22dp"
+         android:paddingRight="22dp"
+         android:paddingTop="10dp"
+         android:text="LOGO_IMAGE"
+         android:textColor="@color/white"
+         android:textSize="18sp"
+         android:textStyle="bold"/>
 
+      <kr.swkang.swimageview.SwImageView
+         android:id="@+id/join_siv_user"
+         android:layout_width="150dp"
+         android:layout_height="150dp"
+         android:layout_gravity="center_horizontal"
+         android:clickable="true"
+         android:scaleType="centerCrop"
+         android:src="@drawable/man_photo_ic"
+         app:siv_border_color="@color/white"
+         app:siv_border_width="3dp"
+         app:siv_click_color="@color/siv_default_dimm"
+         app:siv_click_enter_duration="150"
+         app:siv_click_exit_duration="150"
+         app:siv_enable_transition="true"
+         app:siv_shapetype="circle"
+         app:siv_transition_duration="150"/>
 
-</LinearLayout>
+      <kr.swkang.snstemplate.utils.widgets.ClearableEditText
+         android:id="@+id/join_email"
+         style="@style/LoginEditText"
+         android:layout_marginLeft="24dp"
+         android:layout_marginRight="24dp"
+         android:layout_marginTop="24dp"
+         android:hint="@string/c_email"
+         android:inputType="textEmailAddress"/>
+
+      <kr.swkang.snstemplate.utils.widgets.ClearableEditText
+         android:id="@+id/join_pw"
+         style="@style/LoginEditText"
+         android:layout_marginLeft="24dp"
+         android:layout_marginRight="24dp"
+         android:layout_marginTop="20dp"
+         android:hint="@string/c_password"
+         android:inputType="textPassword"/>
+
+      <kr.swkang.snstemplate.utils.widgets.ClearableEditText
+         android:id="@+id/join_pwre"
+         style="@style/LoginEditText"
+         android:layout_marginLeft="24dp"
+         android:layout_marginRight="24dp"
+         android:layout_marginTop="20dp"
+         android:hint="@string/c_password_re"
+         android:inputType="textPassword"/>
+
+      <kr.swkang.snstemplate.utils.widgets.StateButton
+         android:id="@+id/join_signup"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="24dp"
+         android:layout_marginRight="24dp"
+         android:layout_marginTop="20dp"
+         app:sb_btn_paddingBottom="12dp"
+         app:sb_btn_paddingLeft="34dp"
+         app:sb_btn_paddingRight="34dp"
+         app:sb_btn_paddingTop="12dp"
+         app:sb_btn_selector="@drawable/btn_c_white"
+         app:sb_btn_text_disabled="@string/c_join"
+         app:sb_btn_text_enable="@string/c_join"
+         app:sb_btn_text_wait="@string/c_join_w"
+         app:sb_btn_textcolor="@drawable/btn_c_white_text"
+         app:sb_btn_textsize="15sp"
+         app:sb_progressbar_color="@color/white"
+         app:sb_progressbar_visible="true"
+         app:sb_state="disabled"/>
+
+   </LinearLayout>
+
+</ScrollView>

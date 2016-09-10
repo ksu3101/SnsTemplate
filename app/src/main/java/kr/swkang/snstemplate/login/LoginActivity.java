@@ -1,6 +1,7 @@
 package kr.swkang.snstemplate.login;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.login.widget.LoginButton;
@@ -58,6 +60,8 @@ public class LoginActivity
     }
   };
 
+  @BindView(R.id.login_container)
+  RelativeLayout    container;
   @BindView(R.id.login_stv_find_pw)
   SpannableTextView stvFindPassword;
   @BindView(R.id.login_et_email)
@@ -73,6 +77,8 @@ public class LoginActivity
   @BindView(R.id.login_facebook_login_btn)
   LoginButton       fbBtnLogin;
 
+  private AnimationDrawable animDrawable;
+
   @Override
   public BasePresenter attachPresenter() {
     this.presenter = new LoginActivityPresenter(this);
@@ -84,6 +90,13 @@ public class LoginActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.login_activity);
     ButterKnife.bind(this);
+
+    animDrawable = (AnimationDrawable) (container.getBackground() != null && container.getBackground() instanceof AnimationDrawable ?
+        container.getBackground() : null);
+    if (animDrawable != null) {
+      animDrawable.setEnterFadeDuration(10000);
+      animDrawable.setExitFadeDuration(10000);
+    }
 
     etEmail.addTextChangedListener(textWatcherAdapter);
     etPassword.addTextChangedListener(textWatcherAdapter);
@@ -125,6 +138,22 @@ public class LoginActivity
             .build()
     );
 
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (animDrawable != null && !animDrawable.isRunning()) {
+      animDrawable.start();
+    }
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    if (animDrawable != null && animDrawable.isRunning()) {
+      animDrawable.stop();
+    }
   }
 
   @OnClick({R.id.login_btn_login, R.id.login_tv_signup, R.id.login_facebook_container})
