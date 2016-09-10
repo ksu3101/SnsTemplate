@@ -6,6 +6,7 @@
    <string name="c_login_w">로그인중 입니다.</string>
    <string name="c_logout">로그아웃</string>
    <string name="c_join">회원가입</string>
+   <string name="c_join_w">회원가입중 입니다.</string>
    <string name="c_comfirm">승인</string>
    <string name="c_ok">확인</string>
    <string name="c_complete">완료</string>
@@ -33,6 +34,7 @@
    <string name="c_exit">나가기</string>
    <string name="c_email">이메일</string>
    <string name="c_password">비밀번호</string>
+   <string name="c_password_re">비밀번호 재입력</string>
    <string name="c_skip">SKIP</string>
 
    <string name="error_disabled_services_title">오류</string>
