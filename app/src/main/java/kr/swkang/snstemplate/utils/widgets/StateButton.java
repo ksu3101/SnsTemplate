@@ -11,6 +11,7 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,6 @@ public class StateButton
     this.pbDrawable = null;
     this.isPbVisible = false;
     this.state = STATE_ENABLED;
-    setEnabled(true);
     setClickable(true);
   }
 
@@ -200,8 +200,19 @@ public class StateButton
   }
 
   private void updateLayouts() {
+    RelativeLayout container = (RelativeLayout) findViewById(R.id.statebutton_container);
     Button btn = (Button) findViewById(R.id.statebutton_btn);
     ProgressBar pb = (ProgressBar) findViewById(R.id.statebutton_pb);
+
+    if (btn == null) {
+      throw new NullPointerException("Button view has not found.");
+    }
+    else if (pb == null) {
+      throw new NullPointerException("ProgressBar view has not found.");
+    }
+    else if (container == null) {
+      throw new NullPointerException("Container layout has not found.");
+    }
 
     if (btnPaddings != null) {
       btn.setPadding(btnPaddings.left, btnPaddings.top, btnPaddings.right, btnPaddings.bottom);
