@@ -1,13 +1,17 @@
 package kr.swkang.snstemplate.utils.common;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.squareup.picasso.Picasso;
 
@@ -127,6 +131,14 @@ public abstract class BaseActivity
 
   public SwApplication getApplications() {
     return SwApplication.getInstance();
+  }
+
+  protected void setStatusBarBackgroundColor(@ColorInt int color) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      Window window = getWindow();
+      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      window.setStatusBarColor(color);
+    }
   }
 
   /**
